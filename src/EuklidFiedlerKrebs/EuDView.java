@@ -1,4 +1,4 @@
-package Euklid;
+package EuklidFiedlerKrebs;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
@@ -6,26 +6,25 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-
 public class EuDView extends JPanel implements ActionListener, Observer {
 
 	private static final long serialVersionUID = 1L;
 
-	EuDModel model;
-	
+	private EuDModel model;
+
 	JButton compute = new JButton("Berechnen");
 
 	JTextField a = new JTextField("",10);
 	JTextField b = new JTextField("",10);
 	JTextField g = new JTextField("",6);
-	JTextField ba = new JTextField("", 5);
-	JTextField bb = new JTextField("", 5);
+	JTextField ba = new JTextField("",6); 
+	JTextField bb = new JTextField("",6);
 
 	public EuDView(EuDModel model)  {
 		this.model = model;
 		model.addObserver(this);
 		setBackground(Color.lightGray);
-		
+
 		Box box = Box.createVerticalBox();
 		box.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 50));
 		JLabel label1 = new JLabel("  a");
@@ -44,7 +43,7 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 		compute.setAlignmentX(LEFT_ALIGNMENT);
 		box.add(compute);
 		add(box);		
-		
+
 		Box box2 = Box.createVerticalBox();
 		box2.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		box2.add(new JLabel("  ggt"));		
@@ -55,15 +54,15 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 		add(box2);		
 		
 		Box box3 = Box.createVerticalBox();
-		box3.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
+		box3.setBorder(BorderFactory.createEmptyBorder(15,15,15,50));
 		box3.add(new JLabel("Bezout-Koeffizient von a "));
-		box3.add(Box.createVerticalStrut(10));
+		box3.add(Box.createVerticalStrut(5));
 		ba.setAlignmentX(LEFT_ALIGNMENT);
 		ba.setEditable(false);
 		box3.add(ba);
-		box3.add(Box.createVerticalStrut(10));
+		box3.add(Box.createVerticalStrut(5));
 		box3.add(new JLabel("Bezout-Koeffizient von b"));
-		box3.add(Box.createVerticalStrut(10));
+		box3.add(Box.createVerticalStrut(5));
 		bb.setAlignmentX(LEFT_ALIGNMENT);
 		bb.setEditable(false);
 		box3.add(bb);
@@ -71,24 +70,25 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 	
 		add(box3);
 	
-
 	}
 
 	private void readInput(){
 		try {
 			model.setA(Integer.valueOf(a.getText()));
 			model.setB(Integer.valueOf(b.getText()));
-			model.ggt();
+			model.berechneGgT();
+
 		} catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(this,
 					"Falsches Zahlenformat","Eingabefehler",JOptionPane.ERROR_MESSAGE);
 		} 		
-		catch (ZeroException ze){
-			JOptionPane.showMessageDialog(this, "ggt(0,0) ist nichts definiert");
-	
-		} catch (NegativeException e) {
-			JOptionPane.showMessageDialog(this, "Nur positive Zahlen!");
+		catch(ZeroException ze){
+			JOptionPane.showMessageDialog(this, "ggT(0,0) ist nicht definiert!");
 		}
+		catch (NegativeEingabeException ne){
+			JOptionPane.showMessageDialog(this, "Bitte keine negativen Eingaben!");
+		}
+		
 	}
 
 	@Override
@@ -99,7 +99,10 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		g.setText(model.getGgt()+"");
+		ba.setText(model.getBezoutA()+"");
+		bb.setText(model.getBezoutB()+"");
 	}
+
 }
 
 

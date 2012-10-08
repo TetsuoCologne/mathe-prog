@@ -1,4 +1,4 @@
-package Exceptions;
+package Euklid;
 
 public class ZeroException extends Exception{
 
