@@ -1,4 +1,4 @@
-package EuklidFiedlerKrebs;
+package FielderKrebs;
 
 public class ZeroException extends Exception {
 
