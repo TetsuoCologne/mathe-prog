@@ -1,4 +1,4 @@
-package EuklidFiedlerKrebs;
+package FielderKrebs;
 import java.util.Observable;
 /**
  * 	Diese Klasse berechnet den größten gemeinsamen Teiler und die Bezout Koeffizienten nach dem Erweiterten

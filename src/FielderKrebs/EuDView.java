@@ -1,4 +1,4 @@
-package EuklidFiedlerKrebs;
+package FielderKrebs;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
@@ -20,11 +20,12 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 	JTextField ba = new JTextField("",6); 
 	JTextField bb = new JTextField("",6);
 
+	
 	public EuDView(EuDModel model)  {
 		this.model = model;
 		model.addObserver(this);
 		setBackground(Color.lightGray);
-
+		
 		Box box = Box.createVerticalBox();
 		box.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 50));
 		JLabel label1 = new JLabel("  a");
@@ -46,7 +47,7 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 
 		Box box2 = Box.createVerticalBox();
 		box2.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		box2.add(new JLabel("  ggt"));		
+		box2.add(new JLabel("  ggT"));		
 		box2.add(Box.createVerticalStrut(5));
 		g.setAlignmentX(LEFT_ALIGNMENT);
 		g.setEditable(false);
@@ -66,8 +67,6 @@ public class EuDView extends JPanel implements ActionListener, Observer {
 		bb.setAlignmentX(LEFT_ALIGNMENT);
 		bb.setEditable(false);
 		box3.add(bb);
-		
-	
 		add(box3);
 	
 	}

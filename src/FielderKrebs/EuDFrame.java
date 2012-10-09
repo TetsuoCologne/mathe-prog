@@ -1,9 +1,13 @@
-package EuklidFiedlerKrebs;
+package FielderKrebs;
 
 import java.awt.event.*;
 
 import javax.swing.*;
-
+/**
+ * 
+ * @author Marc Fielder ( ); Franziska Krebs(20101552)
+ *
+ */
 public class EuDFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
