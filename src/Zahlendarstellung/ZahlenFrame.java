@@ -5,6 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 /**
  *	@author Marc Fielder (), Franziska Krebs (20101552)
  */
@@ -23,9 +25,17 @@ public class ZahlenFrame extends JFrame{
 			}
 			
 		});
-		ZahlenModel model = new ZahlenModel();
-		ZahlenView view = new ZahlenView(model);
-		getContentPane().add(view);
+		ZahlenModel zaModel = new ZahlenModel();
+		PotenzModel poModel = new PotenzModel();
+		ZahlenPanel zahlenView = new ZahlenPanel(zaModel);
+		PotenzPanel potenzView = new PotenzPanel(poModel);
+		
+		JTabbedPane tabPane = new JTabbedPane();
+		tabPane.addTab("Zahlensysteme", zahlenView);
+		tabPane.addTab("Potenzen", potenzView);
+		
+		getContentPane().add(tabPane);
+				
 		setPreferredSize(new Dimension(800, 400));
 		pack();
 		
