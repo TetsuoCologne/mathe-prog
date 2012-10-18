@@ -3,7 +3,7 @@ import java.util.Observable;
 /**
  * 	Diese Klasse berechnet den größten gemeinsamen Teiler und die Bezout Koeffizienten nach dem Erweiterten
  * 	Euklidischen Algorithmus.
- * 
+ * 	@author Marc Fiedler, Franziska Krebs
  *
  */
 public class EuDModel extends Observable {
@@ -36,6 +36,7 @@ public class EuDModel extends Observable {
 		this.b = b;
 	}
 
+
 	public EuDModel() {
 		super();
 		a = 0;
@@ -43,7 +44,13 @@ public class EuDModel extends Observable {
 	}
 
 	// Methode zur Berechnung
-	public void berechneGgT() throws ZeroException, NegativeEingabeException {
+	/**
+	 * 
+	 * @throws ZeroException Bei der Eingabe zweier Nullen wird eine Exception geworfen.
+	 * @throws NegativeEingabeException Ist eine der eingegebenen Zahl kleiner als 0, wird ebenfalls eine Exception
+	 * geworfen. Die Festlegung des Fehlertextes erfolgt in der Klasse EuDView.
+	 */
+	public void berechneGgT() throws ZeroException, NegativeEingabeException{
 
 		int q, r, s, t;
 		q=0;

@@ -6,7 +6,7 @@ import javax.swing.*;
 /**
  * Diese Klasse erzeugt das Fenster zur Ein- und Ausgabe der Daten.
  * 
- * @author Marc Fielder ( ); Franziska Krebs(20101552)
+ * @author Marc Fielder (20101508); Franziska Krebs(20101552)
  *
  */
 public class EuDFrame extends JFrame {
