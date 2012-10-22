@@ -143,16 +143,25 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 
 	private void readInput(){
 		try {
-
+			
 			model.setBaseEingabe(Integer.valueOf((String) (baseEingabe.getSelectedItem())));
 			model.setBaseAusgabe(Integer.valueOf((String)(baseAusgabe.getSelectedItem())));
+			eingabeField.setText(eingabeField.getText().toUpperCase());
 			model.setEingabe(String.valueOf(eingabeField.getText()));
+			model.umrechnen();
+			
 		} catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(this,
 					"Falsches Zahlenformat","Eingabefehler",JOptionPane.ERROR_MESSAGE);
 		} 		
 		catch(FalscheEingabeException fe){
 			JOptionPane.showMessageDialog(this, "Der eingegebene String passt nicht zur Basis");
+		}
+		catch (FalscheBasisException fbe) {
+			JOptionPane.showMessageDialog(this, fbe.getMessage());
+		}
+		catch (IntegerOverflowException ioe) {
+			JOptionPane.showMessageDialog(this, "Die Eingabe ist zu groß!");
 		}
 
 
@@ -175,7 +184,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		ausgabeField.setText(model.getAusgabe());
 
 	}
 

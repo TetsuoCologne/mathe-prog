@@ -3,6 +3,11 @@ package Zahlendarstellung;
 public class FalscheEingabeException extends Exception{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param args
 	 */
 	public FalscheEingabeException(){
