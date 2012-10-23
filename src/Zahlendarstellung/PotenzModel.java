@@ -22,6 +22,9 @@ public class PotenzModel extends Observable{
 		
 	}
 
+	public void setExpo(int expo){
+		this.exponent=expo;
+	}
 	public void setFaktor(int faktor) {
 		this.faktor = faktor;
 	}
@@ -30,7 +33,8 @@ public class PotenzModel extends Observable{
 		this.mod = mod;
 	}
 
-	public void setExponent(int exponent) {
+	public void setExponent(int exponent)  {
+	
 		this.exponent = exponent;
 	}
 
@@ -48,7 +52,7 @@ public class PotenzModel extends Observable{
 	private int[] exp2bin(){
 		
 		
-		String exp = Integer.toBinaryString(exponent);
+		String exp = Integer.toBinaryString(Integer.valueOf(exponent));
 		String bin[] = exp.split("");
 
 		binExpoArray = new int[bin.length-1];

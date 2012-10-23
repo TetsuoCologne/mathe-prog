@@ -121,13 +121,14 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 	private  void readInput(){
 		try{
 			model.setFaktor(Integer.valueOf(aField.getText()));
-			model.setExponent(Integer.valueOf(nField.getText()));
+			model.setExpo(Integer.valueOf(nField.getText()));
 			model.setMod(Integer.valueOf(mField.getText()));
 			model.modularesPotenzieren();
 		}
 		catch (NumberFormatException nfe){
-			JOptionPane.showMessageDialog(this, "Keine Buchstaben als Eingabe!");
+			JOptionPane.showMessageDialog(this, "Keine Buchstaben als Eingabe!" + nfe.getMessage());
 		}
+		
 	}
 	
 	

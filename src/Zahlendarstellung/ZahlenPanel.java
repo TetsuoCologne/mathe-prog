@@ -147,7 +147,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 			model.setBaseEingabe(Integer.valueOf((String) (baseEingabe.getSelectedItem())));
 			model.setBaseAusgabe(Integer.valueOf((String)(baseAusgabe.getSelectedItem())));
 			eingabeField.setText(eingabeField.getText().toUpperCase());
-			model.setEingabe(String.valueOf(eingabeField.getText()));
+			model.setEingabe((eingabeField.getText()));
 			model.umrechnen();
 			
 		} catch (NumberFormatException nfe) {
