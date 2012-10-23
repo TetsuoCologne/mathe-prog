@@ -39,7 +39,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 	private JComboBox baseEingabe;
 	private JLabel baseAusgabeLab;
 	private JComboBox baseAusgabe;
-	private String [] exampleBases = {"0","1","2","3","4","5","6","7"};
+	private String [] exampleBases = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
 
 
 

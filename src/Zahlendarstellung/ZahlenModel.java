@@ -1,6 +1,4 @@
 package Zahlendarstellung;
-
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class ZahlenModel extends Observable{

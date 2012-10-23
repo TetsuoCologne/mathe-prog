@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 /**
@@ -104,18 +105,29 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		ausgabeField.setText(String.valueOf(model.getErgebnis()));
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if(e.getSource() == compute){
+			readInput();
+		}
 		
 	}
 	
 	private  void readInput(){
-		
+		try{
+			model.setFaktor(Integer.valueOf(aField.getText()));
+			model.setExponent(Integer.valueOf(nField.getText()));
+			model.setMod(Integer.valueOf(mField.getText()));
+			model.modularesPotenzieren();
+		}
+		catch (NumberFormatException nfe){
+			JOptionPane.showMessageDialog(this, "Keine Buchstaben als Eingabe!");
+		}
 	}
 	
 	
