@@ -1,6 +1,7 @@
 package Zahlendarstellung;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -39,7 +40,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 	private JComboBox baseEingabe;
 	private JLabel baseAusgabeLab;
 	private JComboBox baseAusgabe;
-	private String [] exampleBases = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
+	private String [] exampleBases = {"2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
 
 
 
@@ -100,6 +101,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 		ausgabeLab = new JLabel("Ergebnis der Umrechung");
 		ausgabeLab.setAlignmentX(CENTER_ALIGNMENT);
 		ausgabeField = new JTextField();
+		ausgabeField.setMaximumSize(new Dimension(300, 30));
 		baseAusgabe = new JComboBox(exampleBases);
 		baseAusgabe.setEditable(true);
 		baseAusgabe.addActionListener(this);
@@ -155,7 +157,7 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 					"Falsches Zahlenformat","Eingabefehler",JOptionPane.ERROR_MESSAGE);
 		} 		
 		catch(FalscheEingabeException fe){
-			JOptionPane.showMessageDialog(this, "Der eingegebene String passt nicht zur Basis");
+			JOptionPane.showMessageDialog(this, fe.getMessage());
 		}
 		catch (FalscheBasisException fbe) {
 			JOptionPane.showMessageDialog(this, fbe.getMessage());

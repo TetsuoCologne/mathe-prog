@@ -13,25 +13,22 @@ public class ZahlenModel extends Observable{
 
 	public void setEingabe(String eingabe) throws FalscheEingabeException{
 
-
 		if(check(eingabe)==false){
-			throw new FalscheEingabeException();
+			throw new FalscheEingabeException("Der eingegebene String passt nicht zur Basis!");
 		}
 		else
 			this.eingabe = eingabe;
 	}
 
-	public String getEingabe(){
-		return eingabe;
-	}
+
 
 	public String getAusgabe(){
 		return ausgabe;
 	}
 
 	public void setBaseEingabe(int baseEingabe) throws FalscheBasisException{
-		if(baseEingabe<=0){
-			throw new FalscheBasisException("Die Basis für die Eingabe sollte mindestens 1 sein!");
+		if(baseEingabe<=1){
+			throw new FalscheBasisException("Die Basis für die Eingabe sollte mindestens 2 sein!");
 		}
 		else if(baseEingabe>16){
 			throw new FalscheBasisException("Die Basis für die Eingabe sollte nicht größer 16 sein!");
@@ -41,8 +38,8 @@ public class ZahlenModel extends Observable{
 	}
 
 	public void setBaseAusgabe(int baseAusgabe)throws FalscheBasisException{
-		if(baseAusgabe<=0){
-			throw new FalscheBasisException("Die Basis für die Ausgabe sollte mindestens 1 sein!");
+		if(baseAusgabe<=1){
+			throw new FalscheBasisException("Die Basis für die Ausgabe sollte mindestens 2 sein!");
 		}
 		else if(baseEingabe>16){
 			throw new FalscheBasisException("Die Basis für die Ausgabe sollte nicht größer 16 sein!");
@@ -101,8 +98,8 @@ public class ZahlenModel extends Observable{
 			}ergebnis = ergebnis *  baseEingabe + eingabeArray[i];
 
 		}
-	
-	
+
+
 		return ergebnis;
 	}
 
@@ -178,13 +175,17 @@ public class ZahlenModel extends Observable{
 		return false;
 	}
 
-	private boolean check(String eingabe){
+	private boolean check(String eingabe) throws FalscheEingabeException{
 
+		if(eingabe.charAt(0)=='-'){
+			throw new FalscheEingabeException("Keine negativen Eingaben!");
+		}
+		else{	
+			for(char c : eingabe.toCharArray()){
 
-		for(char c : eingabe.toCharArray()){
-
-			if(isIn(c) == false)
-				return false;
+				if(isIn(c) == false)
+					return false;
+			}
 		}
 		return true;
 

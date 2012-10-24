@@ -11,7 +11,6 @@ public class PotenzModel extends Observable{
 	private int mod;	//modulo
 	private int exponent; //exponent
 	private int erg;
-	//private int[] binArray;	//1,2,4,8,..
 	private int[] binExpoArray; // gefüllt mit Exponent in Binärform
 
 	public PotenzModel(){
@@ -22,22 +21,27 @@ public class PotenzModel extends Observable{
 		
 	}
 
-	public void setExpo(int expo){
-		this.exponent=expo;
+	public void setExponent(int expo) throws FalscheEingabeException{
+		if(expo<=0){
+			throw new FalscheEingabeException("Der Exponent soll mindestens 1 betragen!");
+		}
+		else this.exponent=expo;
 	}
-	public void setFaktor(int faktor) {
-		this.faktor = faktor;
+	public void setFaktor(int faktor) throws FalscheEingabeException {
+		if(faktor<=0){
+			throw new FalscheEingabeException("Der Faktor soll mindestens 1 betragen!");
+		}
+		else this.faktor = faktor;
 	}
 
-	public void setMod(int mod) {
+	public void setMod(int mod) throws FalscheEingabeException {
+		if(mod<=0){
+			throw new FalscheEingabeException("Das m soll mindestens 1 betragen!");
+		}
 		this.mod = mod;
 	}
 
-	public void setExponent(int exponent)  {
 	
-		this.exponent = exponent;
-	}
-
 	public int getErgebnis(){
 		return erg;
 	}
@@ -50,7 +54,8 @@ public class PotenzModel extends Observable{
 	 */
 
 	private int[] exp2bin(){
-		
+	
+
 		
 		String exp = Integer.toBinaryString(Integer.valueOf(exponent));
 		String bin[] = exp.split("");
