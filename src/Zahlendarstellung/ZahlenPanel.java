@@ -74,9 +74,11 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 		eingabeLab = new JLabel("Zahl eingeben:");
 		eingabeLab.setAlignmentX(CENTER_ALIGNMENT);
 		eingabeField = new JTextField();
+		eingabeField.setPreferredSize(new Dimension(200, 30));
 		baseEingabeLab = new JLabel("Basis wählen:");
 		baseEingabeLab.setAlignmentX(CENTER_ALIGNMENT);
 		baseEingabe = new JComboBox(exampleBases);
+		baseEingabe.setPreferredSize(new Dimension(200, 30));
 		baseEingabe.setEditable(true);
 		baseEingabe.addActionListener(this);
 
@@ -101,8 +103,9 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 		ausgabeLab = new JLabel("Ergebnis der Umrechung");
 		ausgabeLab.setAlignmentX(CENTER_ALIGNMENT);
 		ausgabeField = new JTextField();
-		ausgabeField.setMaximumSize(new Dimension(300, 30));
+		ausgabeField.setPreferredSize(new Dimension(200, 30));
 		baseAusgabe = new JComboBox(exampleBases);
+		baseAusgabe.setPreferredSize(new Dimension(200, 30));
 		baseAusgabe.setEditable(true);
 		baseAusgabe.addActionListener(this);
 		baseAusgabeLab = new JLabel("Basis wählen:");
@@ -128,10 +131,11 @@ public class ZahlenPanel extends JPanel implements ActionListener, Observer {
 
 		//untere Box erstellen
 		Box bottomBox = Box.createHorizontalBox();
-		bottomBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 50));
+		bottomBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		clear = new JButton("Löschen");
 		clear.addActionListener(this);
 		bottomBox.add(clear);
+	
 
 
 		//untere Box der Hauptbox hinzufügen
