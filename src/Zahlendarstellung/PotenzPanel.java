@@ -126,7 +126,7 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 			model.modularesPotenzieren();
 		}
 		catch (NumberFormatException nfe){
-			JOptionPane.showMessageDialog(this, "Keine Buchstaben als Eingabe!" + nfe.getMessage());
+			JOptionPane.showMessageDialog(this, "Falsche Eingabe");
 		}
 		catch(FalscheEingabeException fee){
 			JOptionPane.showMessageDialog(this, fee.getMessage());

@@ -21,11 +21,6 @@ public class ZahlenModel extends Observable{
 	}
 
 
-
-	public String getAusgabe(){
-		return ausgabe;
-	}
-
 	public void setBaseEingabe(int baseEingabe) throws FalscheBasisException{
 		if(baseEingabe<=1){
 			throw new FalscheBasisException("Die Basis für die Eingabe sollte mindestens 2 sein!");
@@ -41,11 +36,15 @@ public class ZahlenModel extends Observable{
 		if(baseAusgabe<=1){
 			throw new FalscheBasisException("Die Basis für die Ausgabe sollte mindestens 2 sein!");
 		}
-		else if(baseEingabe>16){
+		else if(baseAusgabe>16){
 			throw new FalscheBasisException("Die Basis für die Ausgabe sollte nicht größer 16 sein!");
 		}
 		else		
 			this.baseAusgabe = baseAusgabe;
+	}
+	
+	public String getAusgabe(){
+		return ausgabe;
 	}
 
 	public int getBaseEingabe(){
