@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 /**
- *	@author Marc Fielder (), Franziska Krebs (20101552)
+ *	@author Marc Fielder (20101508), Franziska Krebs (20101552)
  */
 
 public class Frame extends JFrame{
