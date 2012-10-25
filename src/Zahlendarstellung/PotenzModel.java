@@ -22,6 +22,7 @@ public class PotenzModel extends Observable{
 	}
 
 	public void setExponent(int expo) throws FalscheEingabeException{
+		
 		if(expo<=0){
 			throw new FalscheEingabeException("Der Exponent soll mindestens 1 betragen!");
 		}
@@ -55,8 +56,6 @@ public class PotenzModel extends Observable{
 
 	private int[] exp2bin(){
 	
-
-		
 		String exp = Integer.toBinaryString(Integer.valueOf(exponent));
 		String bin[] = exp.split("");
 
