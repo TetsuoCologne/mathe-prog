@@ -38,6 +38,7 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 	private PotenzModel model;
 	private char c = '\u207F';
 	
+	
 	public PotenzPanel(PotenzModel model){
 		this.model =model;
 		model.addObserver(this);
@@ -54,14 +55,15 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 		
 		aLab = new JLabel("a");
 		aField = new JTextField();
-		aField.setPreferredSize(new Dimension(100, 20));
+		aField.setPreferredSize(new Dimension(200, 30));
 		nLab = new JLabel("n");
 		nField = new JTextField();
-		nField.setPreferredSize(new Dimension(100, 20));
+		nField.setPreferredSize(new Dimension(200, 30));
 		mLab = new JLabel("m");
 		mField = new JTextField();
-		mField.setPreferredSize(new Dimension(100, 20));
+		mField.setPreferredSize(new Dimension(200, 30));
 		
+
 		
 		leftBox.add(aLab);
 		leftBox.add(aField);
@@ -88,7 +90,7 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 		
 		ausgabeLab = new JLabel("a" + c +" mod m");
 		ausgabeField = new JTextField();
-		ausgabeField.setMaximumSize(new Dimension(200, 20));
+		ausgabeField.setMaximumSize(new Dimension(200, 30));
 		ausgabeField.setEditable(false);
 		
 		rightBox.add(ausgabeLab);
@@ -96,7 +98,7 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 		rightBox.add(ausgabeField);
 		
 		
-		
+		// Boxen hinzufügen
 		mainBox.add(leftBox);
 		mainBox.add(middleBox);
 		mainBox.add(rightBox);
@@ -126,10 +128,11 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 			model.modularesPotenzieren();
 		}
 		catch (NumberFormatException nfe){
-			JOptionPane.showMessageDialog(this, "Falsche Eingabe");
+			JOptionPane.showMessageDialog(this, "Falsche oder ungenügende Eingabe");
 		}
 		catch(FalscheEingabeException fee){
 			JOptionPane.showMessageDialog(this, fee.getMessage());
+			
 		}
 		
 	}
