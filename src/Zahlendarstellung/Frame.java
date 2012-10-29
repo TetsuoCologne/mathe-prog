@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 /**
  *	@author Marc Fielder (20101508), Franziska Krebs (20101552)
+ *	Erzeugt ein Fenster für die Ein- und Ausgabe.
  */
 
 public class Frame extends JFrame{

@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 /**
  * 	@author Marc Fiedler, Franziska Krebs
  * 
- * 	Diese Klasse erstellt die View für den ersten Tab.
+ * 	Diese Klasse erstellt die View für den ersten Tab Zahlensysteme.
  */
 
 public class ZahlenPanel extends JPanel implements ActionListener, Observer {

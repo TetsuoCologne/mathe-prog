@@ -3,6 +3,7 @@ package Zahlendarstellung;
 import java.util.Observable;
 /**
  * @param args
+ * Diese Klasse stellt das Model für die modulare Potenz dar. 
  */
 
 public class PotenzModel extends Observable{
@@ -18,22 +19,22 @@ public class PotenzModel extends Observable{
 		mod = 0;
 		exponent = 0;
 		erg = 0;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param expo
 	 * @throws FalscheEingabeException Fängt die Eingabe von Werten, die kleiner gleich 0 sind, ab.
 	 */
 	public void setExponent(int expo) throws FalscheEingabeException{
-		
+
 		if(expo<=0){
 			throw new FalscheEingabeException("Der Exponent soll mindestens 1 betragen!");
 		}
 		else this.exponent=expo;
 	}
-	
+
 	/**
 	 * 
 	 * @param faktor
@@ -58,24 +59,24 @@ public class PotenzModel extends Observable{
 		this.mod = mod;
 	}
 
-	
+
 	public int getErgebnis(){
 		return erg;
 	}
 
-	
 
-	/* Methode, um den Exponenten in eines binäres Array umzuwandeln.
+
+	/** Methode, um den Exponenten in eines binäres Array umzuwandeln.
 	 * 
 	 */
 	private int[] exp2bin(){
-	
+
 		String exp = Integer.toBinaryString(Integer.valueOf(exponent));
 		//String umdrehen für die Berechnung
 		StringBuffer expo = new StringBuffer(exp).reverse();
-		
+
 		String bin[] = expo.toString().split("");
-		
+
 		binExpoArray = new int[bin.length-1];	
 		for(int i =0;i<binExpoArray.length;i++){
 			binExpoArray[i] = Integer.valueOf(bin[i+1]); 
@@ -84,31 +85,43 @@ public class PotenzModel extends Observable{
 		return binExpoArray;
 	}
 
-	/*	Führt den Algorithmus zur Berechnung des Ergebnisses aus. 
-	 * 
+	/**
+	 * Führt den Algorithmus zur Berechnung aus.
+	 * @throws IntegerOverflowException Wird geworfen, wenn bei der Quadrierung der Faktoren der Integer überläuft.
 	 */
-	public void modularesPotenzieren(){
-	
+
+	public void modularesPotenzieren() throws IntegerOverflowException{
+
 		exp2bin();
 		int ergebnis = 1;
-		int auxErg = 1;
-	
-		if(binExpoArray[0]==1){
-			ergebnis=ergebnis*faktor%mod;
-		}
-
-		for(int i = 1;i<binExpoArray.length;i++){
 		
-			if(binExpoArray[i]==1){	
-				faktor=faktor*faktor%mod;
+		if(faktor%mod==0){
+			ergebnis = 0;
+		}
+		else{
+			//erster Durchlauf
+			if(binExpoArray[0]==1){
 				ergebnis=ergebnis*faktor%mod;
-				auxErg = ergebnis;
-
 			}
-			else {
-				ergebnis = auxErg;
-				faktor = faktor*faktor%mod;
-	
+			//restlichen Durchläufe
+			for(int i = 1;i<binExpoArray.length;i++){
+
+				if(faktor ==0){
+					ergebnis = 0;
+				} 
+				else{
+					if(faktor>Integer.MAX_VALUE/faktor){
+						throw new IntegerOverflowException("Der Faktor ist zu groß!");
+					}
+
+					if(binExpoArray[i]==1){	
+						faktor=faktor*faktor%mod;
+						ergebnis=ergebnis*faktor%mod;
+					}
+					else {
+						faktor = faktor*faktor%mod;
+					}
+				}
 			}
 		}
 		this.erg = ergebnis;
