@@ -122,6 +122,9 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 		catch(NumberFormatException nfe){
 			JOptionPane.showMessageDialog(this, "Eingabefehler");
 		}
+		catch(KeinSchaltjahrException kse){
+			JOptionPane.showMessageDialog(this, kse.getMessage());
+		}
 	}
 
 	public void clear(){
