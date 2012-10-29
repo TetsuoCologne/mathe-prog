@@ -16,14 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 /**
  * 	Modulare Potenz View
- * @author franzi
- *
+ * @author Marc Fiedler, Franziska Krebs
+ *	Implementiert die View für den Reiter "Potenzen".
  */
+
+
 public class PotenzPanel extends JPanel implements ActionListener,Observer{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel aLab;
@@ -128,12 +127,15 @@ public class PotenzPanel extends JPanel implements ActionListener,Observer{
 			model.modularesPotenzieren();
 		}
 		catch (NumberFormatException nfe){
-			JOptionPane.showMessageDialog(this, "Falsche oder ungenügende Eingabe");
+			JOptionPane.showMessageDialog(this, "Falsche Eingabe oder Eingabe zu groß!");
 		}
 		catch(FalscheEingabeException fee){
 			JOptionPane.showMessageDialog(this, fee.getMessage());
 			
+		} catch (IntegerOverflowException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
+		 
 		
 	}
 	

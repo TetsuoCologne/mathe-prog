@@ -10,7 +10,11 @@ public class ZahlenModel extends Observable{
 	private char bases []= {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
 
-
+	/**
+	 * 
+	 * @param eingabe
+	 * @throws FalscheEingabeException Wird geworfen, wenn der String nicht zur Basis passt (z.B. Basis = 2 und Eingabe = A)
+	 */
 	public void setEingabe(String eingabe) throws FalscheEingabeException{
 
 		if(check(eingabe)==false){
@@ -21,6 +25,11 @@ public class ZahlenModel extends Observable{
 	}
 
 
+	/**
+	 * 
+	 * @param baseEingabe
+	 * @throws FalscheBasisException Wird geworfen, wenn die Basis kleiner gleich 1 oder größer als 16 ist.
+	 */
 	public void setBaseEingabe(int baseEingabe) throws FalscheBasisException{
 		if(baseEingabe<=1){
 			throw new FalscheBasisException("Die Basis für die Eingabe sollte mindestens 2 sein!");
@@ -32,6 +41,11 @@ public class ZahlenModel extends Observable{
 			this.baseEingabe = baseEingabe;
 	}
 
+	/**
+	 * 
+	 * @param baseAusgabe
+	 * @throws FalscheBasisException Wird geworfen, wenn die Basis kleiner gleich 1 oder größer als 16 ist.
+	 */
 	public void setBaseAusgabe(int baseAusgabe)throws FalscheBasisException{
 		if(baseAusgabe<=1){
 			throw new FalscheBasisException("Die Basis für die Ausgabe sollte mindestens 2 sein!");
@@ -42,7 +56,7 @@ public class ZahlenModel extends Observable{
 		else		
 			this.baseAusgabe = baseAusgabe;
 	}
-	
+
 	public String getAusgabe(){
 		return ausgabe;
 	}
@@ -85,7 +99,7 @@ public class ZahlenModel extends Observable{
 
 	/**
 	 * Diese Methode rechnet nach dem Hornerschema ins 10er System um.
-	 * @throws IntegerOverflowException 
+	 * @throws IntegerOverflowException Wird geworfen, wenn die Eingabe den maximalen Wert für Integer überschreitet.
 	 */
 	private int umrechnenDezimal() throws IntegerOverflowException{
 
@@ -102,7 +116,11 @@ public class ZahlenModel extends Observable{
 		return ergebnis;
 	}
 
-
+	/**
+	 * 
+	 * @throws IntegerOverflowException Wird vom "umrechnenDezimal" weiter gegeben und fängt die Eingabe von zu großen
+	 * 	Integer-Werten ab.
+	 */
 	public void umrechnen() throws IntegerOverflowException{
 		//ausgabe wieder zurücksetzen, sonst wird beim nochmaligen Klicken was rangehangen
 		ausgabe = "";
@@ -174,6 +192,12 @@ public class ZahlenModel extends Observable{
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param eingabe
+	 * @return 
+	 * @throws FalscheEingabeException Wird geworfen, wenn das erste Zeichen ein '-' ist. Negative Eingaben sollen damit abgefangen werden.
+	 */
 	private boolean check(String eingabe) throws FalscheEingabeException{
 
 		if(eingabe.charAt(0)=='-'){
