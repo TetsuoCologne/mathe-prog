@@ -10,13 +10,12 @@ public class test {
 	 */
 	public static void main(String[] args) {
 		
-		HashMap<Integer, Integer> map =new HashMap<>();
-		map.put(01, 0);
-		map.put(02, 3);
-		map.put(03, 3);
-		
-		System.out.println(map.get(02));
-		
+//		int a = 03;
+//		char[] b = String.valueOf(a).toCharArray();
+//		if(b.length == 2){
+//			StringBuilder build = new StringBuilder(b);
+//		}
+//		
 
 	}
 

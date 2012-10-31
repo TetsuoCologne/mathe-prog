@@ -14,6 +14,8 @@ public class WochenModel extends Observable{
 	private int tag;
 	private int monat;
 	private int jahr;
+	//wird gebraucht bei führenden Nullen
+	private String jahrMitNull;
 	private int jahrhundert;
 	private String wochentag;
 	private int [] berechnungsArray;
@@ -22,10 +24,13 @@ public class WochenModel extends Observable{
 	
 	
 	public void checkEingabe() throws KeinSchaltjahrException{
+			
+		// b = letzter tag des Monats
+		//if(tag<1 || tag >= b)
 		if(checkSchaltjahr() == false){
 			if(monat ==2){
 				if(tag<1 || tag >=29){
-					throw new KeinSchaltjahrException("Kein 29. Februar für das Jahr " + String.valueOf(jahrhundert).concat(String.valueOf(jahr))+ "!" );
+					throw new KeinSchaltjahrException("Kein 29. Februar für das Jahr " + String.valueOf(jahrhundert).concat(String.valueOf(jahrMitNull))+ "!" );
 				}
 			}
 		}
@@ -46,7 +51,9 @@ public class WochenModel extends Observable{
 	public void setJahrKomplett(String jahr){
 		char [] jahrChar = jahr.toCharArray();
 		this.jahrhundert = Integer.valueOf(String.copyValueOf(jahrChar, 0, 2));
+		this.jahrMitNull = String.copyValueOf(jahrChar,2,2);
 		this.jahr = Integer.valueOf(String.copyValueOf(jahrChar, 2, 2));
+		
 
 	}
 
@@ -112,8 +119,11 @@ public class WochenModel extends Observable{
 
 	private boolean checkSchaltjahr(){
 		boolean schalt = false;
-
-		int komplettesJahr = Integer.valueOf(String.valueOf(jahrhundert).concat(String.valueOf(jahr)));
+		
+	
+		System.out.println(jahrMitNull);
+		
+		int komplettesJahr = Integer.valueOf(String.valueOf(jahrhundert).concat(jahrMitNull));
 
 		if(monat<=2){
 			if(komplettesJahr%4==0 && komplettesJahr%100!=0){
