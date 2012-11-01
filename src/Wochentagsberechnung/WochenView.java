@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,11 +12,13 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.text.MaskFormatter;
 
 public class WochenView extends JPanel implements ActionListener,Observer{
 
@@ -25,13 +28,9 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 	 * 
 	 */
 	private WochenModel model;
-	private JLabel dayLabel;
-	private JTextField dayField;
-	private JLabel monthLabel;
-	private JTextField monthField;
-	private JLabel yearLabel;
-	private JTextField yearField;
 	private JLabel wochentag;
+	private JLabel date;
+	private JFormattedTextField dateField;
 	private JTextField wochentagsField;
 	private JButton compute;
 	private JButton clear;
@@ -45,7 +44,7 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 		//Hauptbox
 		
 		Box mainBox = Box.createVerticalBox();
-		mainBox.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20));
+		mainBox.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
 		//obere Box, bestehend aus 3 Einzelboxen
 		Box upperBox = Box.createHorizontalBox();
@@ -53,45 +52,34 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 	
 		//linke Box
 		Box leftBox = Box.createVerticalBox();
-		leftBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		dayLabel = new JLabel("Tag:");
-		dayField = new JTextField();
-		leftBox.add(dayLabel);
-		leftBox.add(dayField);
-		dayField.setPreferredSize(new Dimension(40, 20));
+		leftBox.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
-		//mittlere Box
-		Box middleBox = Box.createVerticalBox();
-		middleBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		monthLabel = new JLabel("Monat:");
-		monthField = new JTextField();
-		middleBox.add(monthLabel);
-		middleBox.add(monthField);
-		monthField.setPreferredSize(new Dimension(40, 20));
+		date = new JLabel("Datum");
+		try {
+			MaskFormatter mask = new MaskFormatter("##.##.####");
+			mask.setPlaceholderCharacter('0');
+			dateField = new JFormattedTextField(mask);
+			dateField.setText("01011700");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		leftBox.add(date);
+		leftBox.add(dateField);
 		
-		//rechte Box
+		//rechte Box mit Wochentag
 		Box rightBox = Box.createVerticalBox();
 		rightBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		yearLabel = new JLabel("Jahr:");
-		yearField = new JTextField();
-		rightBox.add(yearLabel);
-		rightBox.add(yearField);
-		yearField.setPreferredSize(new Dimension(40,20));
-		
-		//ganz rechte Box mit Wochentag
-		Box wochenBox = Box.createVerticalBox();
-		wochenBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		wochentag = new JLabel("Wochentag:");
 		wochentagsField = new JTextField();
-		wochenBox.add(wochentag);
-		wochenBox.add(wochentagsField);
+		rightBox.add(wochentag);
+		rightBox.add(wochentagsField);
+		wochentagsField.setMaximumSize((new Dimension(200, 20)));
 		wochentagsField.setEditable(false);
 
 		
 		upperBox.add(leftBox);
-		upperBox.add(middleBox);
 		upperBox.add(rightBox);
-		upperBox.add(wochenBox);
 		
 		Box buttonBox = Box.createHorizontalBox();
 		buttonBox.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
@@ -112,25 +100,27 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 	}
 	public void readInput(){
 		try{
-			model.setTag(Integer.valueOf(dayField.getText()));
-			model.setMonat(Integer.valueOf(monthField.getText()));
-			model.setJahrKomplett(yearField.getText());
+			model.setEingabeKomplett(dateField.getText());
 			model.wochenTagsBerechnung();
-			
-			
+		
 		}
 		catch(NumberFormatException nfe){
 			JOptionPane.showMessageDialog(this, "Eingabefehler");
+			dateField.setText("01011700");
 		}
 		catch(KeinSchaltjahrException kse){
 			JOptionPane.showMessageDialog(this, kse.getMessage());
+			
+		} catch (FalschesJahrException fje) {
+			JOptionPane.showMessageDialog(this, fje.getMessage());
+			
+		} catch (FalscherMonatException fme) {
+			JOptionPane.showMessageDialog(this, fme.getMessage());
 		}
 	}
 
 	public void clear(){
-		dayField.setText(" ");
-		monthField.setText(" ");
-		yearField.setText(" ");
+		dateField.setText("01011700");
 		wochentagsField.setText(" ");
 	}
 	
@@ -151,10 +141,7 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 		
 	}
 
-	/**
-	 * @param args
-	 */
-	
+
 	
 
 }
