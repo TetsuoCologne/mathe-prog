@@ -10,13 +10,11 @@ public class test {
 	 */
 	public static void main(String[] args) {
 		
-//		int a = 03;
-//		char[] b = String.valueOf(a).toCharArray();
-//		if(b.length == 2){
-//			StringBuilder build = new StringBuilder(b);
-//		}
-//		
 
+		String a = "01.01.1700";
+		String[] b  = a.split("\\.");
+		int c = Integer.valueOf(b[0]);
+		System.out.println(c);
 	}
 
 }
