@@ -108,7 +108,7 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 			JOptionPane.showMessageDialog(this, "Eingabefehler");
 			dateField.setText("01011700");
 		}
-		catch(KeinSchaltjahrException kse){
+		catch(TagNichtImMonatException kse){
 			JOptionPane.showMessageDialog(this, kse.getMessage());
 			
 		} catch (FalschesJahrException fje) {
