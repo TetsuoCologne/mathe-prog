@@ -19,14 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.text.MaskFormatter;
-
+/**
+ * 
+ * @author Marc Fiedler, Franziska Krebs
+ * 	Diese Klasse erstellt das Fenster.
+ *
+ */
 public class WochenView extends JPanel implements ActionListener,Observer{
 
 	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
 	private WochenModel model;
 	private JLabel wochentag;
 	private JLabel date;
@@ -98,6 +100,8 @@ public class WochenView extends JPanel implements ActionListener,Observer{
 		this.add(mainBox);
 		
 	}
+	
+	
 	public void readInput(){
 		try{
 			model.setEingabeKomplett(dateField.getText());
