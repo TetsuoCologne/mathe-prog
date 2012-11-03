@@ -6,27 +6,21 @@ import java.util.Observable;
 /**
  * 
  * @author Marc Fielder, Franziska Krebs
- *  Diese Klasse enthält die Berechnung des Wochentags. 
+ *  Diese Klasse enthält die Berechnung des Wochentags.
  *
  */
 public class WochenModel extends Observable{
 
 
-	// TODO Auto-generated method stub
-	// Seite zum testen: http://www.weltzeituhr.com/infos/wochentage_berechnung.shtml
-	// die Ziffern sind eine zuweisung um einfacher zu rechnen
-	//eingabe
-
 	private String datumKomplett;
 	private int tag;
 	private int monat;
-	private int jahrKomplett;
-	//wird gebraucht bei führenden Nullen
-	private String jahrMitNull;
-	private int jahrhundert;
 	private int jahr;
+	private int jahrKomplett;
+	private int jahrhundert;
 	private String wochentag;
 	private int [] berechnungsArray;
+	private String [] wochentagsArray;
 	private HashMap<Integer, Integer> month = new HashMap<>();
 
 	
@@ -36,14 +30,6 @@ public class WochenModel extends Observable{
 		this.datumKomplett = eingabeKomplett;
 	}
 	
-	public void setTag(int tag){
-		this.tag = tag;
-	}
-
-	public void setMonat(int monat){
-		this.monat = monat;
-
-	}
 
 	private void setWochentag(String wochentag){
 		this.wochentag = wochentag;
@@ -57,7 +43,7 @@ public class WochenModel extends Observable{
 
 	/**
 	 * 	Konstruktor
-	 * 	HashMap für Monate initialisieren; zu jedem Monat die Merkziffer
+	 * 	HashMap für Monate initialisieren; zu jedem Monat die Merkziffer hinzufügen.
 	 */
 	public WochenModel(){
 		berechnungsArray = new int[5];
@@ -79,7 +65,15 @@ public class WochenModel extends Observable{
 		month.put(10, 0);
 		month.put(11, 3);
 		month.put(12, 5);
-
+		wochentagsArray = new String[7];
+		wochentagsArray[0] ="Sonntag";
+		wochentagsArray[1] ="Montag";
+		wochentagsArray[2] ="Dienstag";
+		wochentagsArray[3] ="Mittwoch";
+		wochentagsArray[4] ="Donnerstag";
+		wochentagsArray[5] ="Freitag";
+		wochentagsArray[6] ="Samstag";
+	
 	}
 	
 	/**
@@ -90,8 +84,7 @@ public class WochenModel extends Observable{
 	 * 
 	 * @throws FalschesJahrException Wird geworfen, wenn das Jahr vor 1700 oder nach 1200 eingegeben wird.
 	 * @throws FalscherMonatException Wird geworfen, wenn der Monat nicht zwischen 1 und 12 liegt.
-	 * Für den Fall, dass ein Jahr der Form 1900 oder 1902 eingegeben wird, wird der letzte Teil der Eingabe zusätzlich als 
-	 * String gescpeichert. Dies spielt insbesondere bei der 
+	 * 
 	 */
 	private void splitEingabe() throws FalschesJahrException, FalscherMonatException{
 		String [] datum = (datumKomplett.split("\\."));
@@ -107,16 +100,15 @@ public class WochenModel extends Observable{
 		char [] jahrChar = String.valueOf(jahrKomplett).toCharArray();
 		this.jahrhundert = Integer.valueOf(String.copyValueOf(jahrChar, 0, 2));
 		this.jahr = Integer.valueOf(String.copyValueOf(jahrChar, 2, 2));
-		
-		System.out.println(jahrKomplett + " " + jahr);
+	
 	}
 	
 	/**
-	 * 	
+	 * 	Diese Methode checkt, ob die Eingabe korrekt ist. 
 	 *  @throws TagNichtImMonatException Wird geworfen, wenn der Tag nicht im Monat enthalten ist.
 	 */
 	
-	public void checkEingabe() throws TagNichtImMonatException{
+	private void checkEingabe() throws TagNichtImMonatException{
 		int tagesAnzahl = 0;
 		if(monat%2!=0&&monat<=7||monat>=7&&monat%2==0){
 			tagesAnzahl = 31;
@@ -124,10 +116,10 @@ public class WochenModel extends Observable{
 		else if(monat%2==0&&monat<=7||monat>7&&monat%2!=0){
 			tagesAnzahl = 30;
 		}
-		if(monat ==2 &&checkSchaltjahr()==false){
+		if(!(monat ==2 &&checkSchaltjahr())){
 			tagesAnzahl  =28;
 		}
-		else if(monat==2 &&checkSchaltjahr() ==true){
+		else if(monat==2 &&checkSchaltjahr()){
 			tagesAnzahl = 29;
 		}
 		
@@ -137,57 +129,60 @@ public class WochenModel extends Observable{
 		
 	}
 
-	//Methode zur Berechnung des Tages 
+	/**
+	 * 	Diese Methode berechnet die Tagesziffer und schiebt sie ins Array.
+	 */
 	private void berechneTagesZiffer(){
 		berechnungsArray[0] = tag%7;
 	}
 
 
-	//Methode zur berechnung des Monats Anmerkung im Array "monatsziffer" gibt die tage des monats an wobei null am anfang ein platzhalter ist da der index bei null beginnt f�r januar aber bei 1
-	//Ablauf ist folgenderweise jedem Monat wird eine ziffer zugewiesen
-
+	/**
+	 * 	Diese Methode holt die Merkziffer aus der HashMap und schiebt sie ins Array.
+	 */
 	private void berechneMonat(){
-		berechnungsArray[1] = month.get(monat);;
+		berechnungsArray[1] = month.get(monat);
 
 	}
 
 
-	//Methode Jahr hier wierd jedem jahr eine Ziffer zugewiesen 
+	/**
+	 * 	Diese Methode berechnet das Jahr(die letzten beiden Ziffern) und schiebt dieses ins Array.
+	 */
 	private void berechneJahr(){
 		berechnungsArray[2] = (jahr+(jahr/4))%7;
 
 	}
 
 
-	// Methode für die Jahrundert Ziffer
+	/**
+	 * 	Diese Methode berechnet die Ziffer für das Jahrhundert und schiebt dieses ins Array.
+	 */
 	private void berechneJahrhundert(){
 		berechnungsArray[3] = (3-(jahrhundert%4))*2;
 	}
 
 
 
+	/**
+	 *  Diese Methode überprüft, ob das eingegebene Jahr ein Schaltjahr ist.
+	 * @return
+	 */
 	private boolean checkSchaltjahr(){
 		boolean schalt = false;
-	
-		if(monat<=2){
-			if(jahrKomplett%4==0 && jahrKomplett%100!=0){
-				schalt = true;
-			}
-			else if(jahrKomplett%400==0){
-				schalt = true;
-			}
-			else{
-				schalt =false;
-			}
-		}
+		
+		schalt = ((jahrKomplett%4 == 0 && jahrKomplett%100 != 0) || jahrKomplett%400 == 0  );
 
-		else{
-			schalt = false;
-		}
 		return schalt;
 	}
 
-	//Ergebnismethode der gesamtrechnung hier werden s�mtliche ziffern addiert wenn schalltjahr dann 6 sonst 0 auch null f�r die ersten zwei monate jan und febr die summe der ziffern wird mod 7 gerechnet und danach wird das ergebnis ausgegeben
+	/**
+	 * 
+	 * 	Diese Methode führt die eigentliche Berechnung des Tages aus.
+	 * @throws TagNichtImMonatException Wird hochpropagiert von der Methode "checkEingabe".
+	 * @throws FalschesJahrException Wird hochpropagiert von der Methode "splitEingabe".
+	 * @throws FalscherMonatException Wird hochpropagiert von der Methode "splitEingabe"
+	 */
 
 	public void wochenTagsBerechnung() throws TagNichtImMonatException, FalschesJahrException, FalscherMonatException{
 		splitEingabe();
@@ -196,41 +191,21 @@ public class WochenModel extends Observable{
 		berechneMonat();
 		berechneJahr();
 		berechneJahrhundert();
-		System.out.println(jahrKomplett);
-		System.out.println(checkSchaltjahr());
-		if(checkSchaltjahr()==true){
+
+		if(checkSchaltjahr() && monat<=2){
 			berechnungsArray[4] = 6;
 		}else{
 			berechnungsArray[4]=0;
 		}
 
 		int wochentagsziffer = 0;
-		for(int a : berechnungsArray){
-			System.out.println(a);
-		}
+	
 		for(int i = 0;i<berechnungsArray.length;i++){
 			wochentagsziffer+=berechnungsArray[i];
 		}
 		wochentagsziffer = wochentagsziffer%7;
-		System.out.println(wochentagsziffer);
-		switch(wochentagsziffer){
-		case 0:setWochentag("Sonntag");
-		break;
-		case 1:setWochentag("Montag");
-		break;
-		case 2:setWochentag("Dienstag");
-		break;
-		case 3:setWochentag("Mittwoch");
-		break;
-		case 4:setWochentag("Donnerstag");
-		break;
-		case 5:setWochentag("Freitag");
-		break;
-		case 6:setWochentag("Samstag");
-		break;
-
-
-		}
+		setWochentag(wochentagsArray[wochentagsziffer]);
+		
 
 		setChanged();
 		notifyObservers();
