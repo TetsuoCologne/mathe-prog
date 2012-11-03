@@ -6,13 +6,17 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+/**
+ *
+ *	@author Marc Fielder (20101508); Franziska Krebs(20101552)
+ *	Diese Klasse erstellt das Fenster und zeigt es an.
+ *
+ */
 public class WochenFrame extends JFrame{
 
 	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * @param args
-	 */
+
 	public WochenFrame(){
 		super("Wochentagsberechnung");
 		addWindowFocusListener(new WindowAdapter() {
