@@ -103,13 +103,12 @@ public class isbnNummer {
 					 
 					result=result+einzelArray[j]*(j+1);						 
 			} //for schleife
-			 // hier werden die ergebnisse in ein array gesteckt da das einzige ergebnis das richtig sein kann 0 ist wird der indexspeicher auf diesen eintrag gesetzt und ausgegeben
-			  //for schleife Anfang 1
+			 
 				
 			    if(result%11==0){
 			    	System.out.println(einzelArray[indexSpeicher]);
 			    }//if Anweisung
-			  //for schleife ende 1
+			
 				einzelArray[indexSpeicher]=einzelArray[indexSpeicher]+1;
 			}//while schleife
 	} //Methode
