@@ -109,7 +109,7 @@ public class isbnNummer {
 			    if(result%11==0){
 			    	System.out.println(einzelArray[indexSpeicher]);
 			    }//if Anweisung
-			 } //for schleife ende 1
+			  //for schleife ende 1
 				einzelArray[indexSpeicher]=einzelArray[indexSpeicher]+1;
 			}//while schleife
 	} //Methode
