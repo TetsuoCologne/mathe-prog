@@ -96,7 +96,7 @@ public class isbnNummer {
 			while(einzelArray[indexSpeicher]<9)	{
 				einzelArray[indexSpeicher]=einzelArray[indexSpeicher]+1;
 				int result=0;
-				int ErgebenisSpeicherArray[]=new int[12];
+				int ErgebenisSpeicherArray[]=new int[10];
 			//die for schleife dient dazu jedes mal zu rechnen also fehlende ziffer ist gleich 1...9 wenn die while schleife den Indexspeicher neu setzt
 				for(int j=0;j<=einzelArray.length-1;j++){
 					
