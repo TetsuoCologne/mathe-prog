@@ -24,7 +24,7 @@ public class isbnNummer {
 		boolean d=KorrekteIsbn(e);
 		System.out.println("5:"+d);
 		
-		Fehlendeziffer("x866801920");
+		Fehlendeziffer("386680192x");
 		
 		}
 		//Methode teilt zuerst den String in seine einzelnen ziffern und wandelt ihn in ein int um danach 
@@ -94,9 +94,9 @@ public class isbnNummer {
 			
 			//Die whileschleife lässt den IndexSpeicher(merkt sich den Index der fehlenden Ziffer) 9 mal durchlaufen also 1...9
 			while(einzelArray[indexSpeicher]<9)	{
-				einzelArray[indexSpeicher]=einzelArray[indexSpeicher]+1;
+				
 				int result=0;
-				int ErgebenisSpeicherArray[]=new int[10];
+			
 			//die for schleife dient dazu jedes mal zu rechnen also fehlende ziffer ist gleich 1...9 wenn die while schleife den Indexspeicher neu setzt
 				for(int j=0;j<=einzelArray.length-1;j++){
 					
@@ -104,13 +104,13 @@ public class isbnNummer {
 					result=result+einzelArray[j]*(j+1);						 
 			} //for schleife
 			 // hier werden die ergebnisse in ein array gesteckt da das einzige ergebnis das richtig sein kann 0 ist wird der indexspeicher auf diesen eintrag gesetzt und ausgegeben
-				for(int t=0;t<1;t++){  //for schleife Anfang 1
-				ErgebenisSpeicherArray[t]=result;
-			    if(ErgebenisSpeicherArray[t]%11==0){
+			  //for schleife Anfang 1
+				
+			    if(result%11==0){
 			    	System.out.println(einzelArray[indexSpeicher]);
 			    }//if Anweisung
 			 } //for schleife ende 1
-			
+				einzelArray[indexSpeicher]=einzelArray[indexSpeicher]+1;
 			}//while schleife
 	} //Methode
 		
