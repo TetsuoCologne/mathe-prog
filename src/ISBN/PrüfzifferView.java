@@ -24,7 +24,7 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Model model;
+	private PrüfzifferModel model;
 	private JLabel headline;
 	private JLabel isbnLabel;
 	private JFormattedTextField isbnField;
@@ -36,7 +36,7 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 	private JButton prüfButton;
 	
 	
-	public PrüfzifferView(Model model){
+	public PrüfzifferView(PrüfzifferModel model){
 		
 		this.model = model;
 		model.addObserver(this);

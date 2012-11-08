@@ -7,7 +7,7 @@ public class isbnNummer {
 		public static void main(String[] args) {
 			// TODO Auto-generated method stub
 	String isbn="3866801920";
-	String vollständigeIsbn="3866801920";
+	String vollstÃ¤ndigeIsbn="3866801920";
 
 	    int b=BerechnungPrueffZiffer(isbn);
 		System.out.println("1:"+b);
@@ -18,7 +18,7 @@ public class isbnNummer {
 		int c=BerechnungPrueffZiffer(isbnX);
 		System.out.println("3:"+c);
 		
-		int e=BerechnungPrueffZiffer(vollständigeIsbn);
+		int e=BerechnungPrueffZiffer(vollstÃ¤ndigeIsbn);
 		System.out.println("4:"+e);
 		
 		boolean d=KorrekteIsbn(e);
@@ -29,7 +29,7 @@ public class isbnNummer {
 		}
 		//Methode teilt zuerst den String in seine einzelnen ziffern und wandelt ihn in ein int um danach 
 		//wird in der Zeile ergebnis=ergebnis+einzelziffer*(i+1); 1*isbn+2*isbn+3*isbn gerechnet
-		//außerhalb der schleife wird dann das endergbis der rechnung von innerhalb der schleife genommen und mod 11 gerechnet
+		//auï¿½erhalb der schleife wird dann das endergbis der rechnung von innerhalb der schleife genommen und mod 11 gerechnet
 		
 		public static int BerechnungPrueffZiffer(String isbn){
 			int ergebnis=0;
@@ -42,11 +42,11 @@ public class isbnNummer {
 				 ergebnis=ergebnis+einzelziffer*(i+1);
 			    
 			}		
-			//Resultat ist die Prüfziffer
+			//Resultat ist die Prï¿½fziffer
 			resultat=ergebnis%11;
 			return resultat;
 		}
-	   //macht eine konkordination von dem 9 ziffrigen String und der prüfziffer(ist optional)
+	   //macht eine konkordination von dem 9 ziffrigen String und der prï¿½fziffer(ist optional)
 		public static String prueffungAufKorrekthewit(String isbn){
 	    String neuerIsbnString;
 	    String string = String.valueOf(BerechnungPrueffZiffer(isbn));
@@ -56,18 +56,18 @@ public class isbnNummer {
 		
 			    }
 			   
-		//prüfung auf korrekte isbn
+		//prï¿½fung auf korrekte isbn
 		
-		public static boolean KorrekteIsbn(int vollständigeIsbn){
+		public static boolean KorrekteIsbn(int vollstÃ¤ndigeIsbn){
 			    	
 			    	
-			    	boolean prüfung=true;
-			    	if(vollständigeIsbn%11==0){
+			    	boolean prÃ¼fung=true;
+			    	if(vollstÃ¤ndigeIsbn%11==0){
 			    		
 			    	}else{
-			    		prüfung=false;
+			    		prÃ¼fung=false;
 			    	}
-			    	return prüfung;
+			    	return prÃ¼fung;
 			    }
 
 		
@@ -77,7 +77,7 @@ public class isbnNummer {
 		int indexSpeicher=0;
 		int einzelArray[]=new int[isbn.length()];
 		
-		//hier wird geschaut wo die ziffer fehlt und wird vorerst mit null initialisiert später wird erst ab 1 weiter gezählt da muss noch verbessert werden
+		//hier wird geschaut wo die ziffer fehlt und wird vorerst mit null initialisiert spï¿½ter wird erst ab 1 weiter gezï¿½hlt da muss noch verbessert werden
 		for(int i=0;i<=isbn.length()-1;i++){
 			
 			String IndexLokalisiererChar=isbn.substring(0+i,i+1);
@@ -92,7 +92,7 @@ public class isbnNummer {
 		
 		
 			
-			//Die whileschleife lässt den IndexSpeicher(merkt sich den Index der fehlenden Ziffer) 9 mal durchlaufen also 1...9
+			//Die whileschleife lï¿½sst den IndexSpeicher(merkt sich den Index der fehlenden Ziffer) 9 mal durchlaufen also 1...9
 			while(einzelArray[indexSpeicher]<9)	{
 				
 				int result=0;

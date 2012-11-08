@@ -12,9 +12,14 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+import Wochentagsberechnung.FalscherMonatException;
+import Wochentagsberechnung.FalschesJahrException;
+import Wochentagsberechnung.TagNichtImMonatException;
 
 public class KorrektView extends JPanel implements ActionListener, Observer{
 
@@ -24,31 +29,32 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 	private static final long serialVersionUID = 1L;
 
 
-	private Model model;
+	private KorrekteISBNModel model;
 	private JLabel headline;
 	private JLabel isbnLabel;
 	private JFormattedTextField isbnField;
-	private JButton prüfen;
+	private JButton pruefen;
 	private JButton clear;
 	private JTextField ergebnis;
 
 
 
-	public KorrektView(Model model){
+	public KorrektView(KorrekteISBNModel model){
 		this.model = model;
+		model.addObserver(this);
 
 		Box mainBox = Box.createVerticalBox();
 		mainBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		Box middleBox = Box.createHorizontalBox();
 		middleBox.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		
+
 		Box leftBox = Box.createVerticalBox();
 		leftBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		Box rightBox = Box.createVerticalBox();
 		rightBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-			
+
 		Box lowerBox = Box.createVerticalBox();
 		lowerBox.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
@@ -59,7 +65,8 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 
 		isbnLabel = new JLabel("ISBN eingeben:");
 		try {
-			MaskFormatter maskPrüf = new MaskFormatter("#-#####-###-#");
+			MaskFormatter maskPrüf = new MaskFormatter("#-#####-###-A");
+			maskPrüf.setValidCharacters("0123456789Xx");
 			isbnField = new JFormattedTextField(maskPrüf);
 			isbnField.setText("1234567890");
 		} catch (ParseException e) {
@@ -71,39 +78,63 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 		leftBox.add(Box.createVerticalStrut(20));
 		leftBox.add(isbnField);
 
-		prüfen = new JButton("Überprüfen");
-		prüfen.setAlignmentX(CENTER_ALIGNMENT);
+		pruefen = new JButton("Überprüfen");
+		pruefen.setAlignmentX(CENTER_ALIGNMENT);
+		pruefen.addActionListener(this);
 		clear = new JButton("clear");
+		clear.addActionListener(this);
 		clear.setAlignmentX(CENTER_ALIGNMENT);
-		
-		rightBox.add(prüfen);
+
+		rightBox.add(pruefen);
 		rightBox.add(Box.createVerticalStrut(10));
 		rightBox.add(clear);
-		
+
 		ergebnis = new JTextField("");
 		ergebnis.setBackground(Color.cyan);
+		ergebnis.addActionListener(this);
 		ergebnis.setEditable(false);
 
 
 		middleBox.add(leftBox);
 		middleBox.add(rightBox);
-		
+
 		mainBox.add(middleBox);
 		lowerBox.add(ergebnis);
 		mainBox.add(lowerBox);
-		
+
 		this.add(mainBox);
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		if(model.getCheck()){
+			ergebnis.setBackground(Color.green);
+		}
+		else ergebnis.setBackground(Color.red);
 
 	}
 
+	public void readInput(){
+
+		model.setInput(isbnField.getText());
+		model.checkISBN();
+
+	}
+
+	public void clear(){
+		ergebnis.setBackground(Color.cyan);
+		isbnField.setText("1234567890");
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() == pruefen){
+			readInput();
+			
+			
+		}
+		else clear();
+
 
 	}
 

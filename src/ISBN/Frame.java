@@ -23,10 +23,13 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		Model model = new Model();
-		PrüfzifferView prüfzifferKorrektheit = new PrüfzifferView(model);
-		KorrektView korrektView = new KorrektView(model);
-		FehlendeZifferView fehlendeZiffer = new FehlendeZifferView(model);
+		PrüfzifferModel prüfZifferModel = new PrüfzifferModel();
+		KorrekteISBNModel korrektModel = new KorrekteISBNModel();
+		FehlendeZifferModel fehlendeZifferModel = new FehlendeZifferModel();
+		
+		PrüfzifferView prüfzifferKorrektheit = new PrüfzifferView(prüfZifferModel);
+		KorrektView korrektView = new KorrektView(korrektModel);
+		FehlendeZifferView fehlendeZiffer = new FehlendeZifferView(fehlendeZifferModel);
 		
 	
 		JTabbedPane pane = new JTabbedPane();

@@ -20,7 +20,7 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Model model;
+	private FehlendeZifferModel model;
 	private JLabel heading;
 	private JLabel isbnLabel;
 	private JFormattedTextField isbnField;
@@ -29,7 +29,7 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 	private JLabel ergebnisLabel;
 	private JFormattedTextField ergebnisField;
 	
-	public FehlendeZifferView(Model model){
+	public FehlendeZifferView(FehlendeZifferModel model){
 		this.model = model;
 		
 		Box mainBox = Box.createVerticalBox();
@@ -52,7 +52,7 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 		mainBox.add(heading);
 		
 		
-		isbnLabel = new JLabel("Für die fehlende Ziffer bitte ein 'X' eingeben:");
+		isbnLabel = new JLabel("Für die fehlende Ziffer bitte ein 'Z' eingeben:");
 		isbnField = new JFormattedTextField();
 		leftMiddleBox.add(isbnLabel);
 		leftMiddleBox.add(Box.createVerticalStrut(20));
