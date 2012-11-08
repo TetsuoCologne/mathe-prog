@@ -3,8 +3,9 @@ package ISBN;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Model extends Observable{
+public class PrüfzifferModel extends Observable{
 
+	private String input;
 
 
 
