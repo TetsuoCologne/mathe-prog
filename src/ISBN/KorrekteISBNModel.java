@@ -1,6 +1,5 @@
 package ISBN;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class KorrekteISBNModel extends Observable{
