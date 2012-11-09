@@ -44,13 +44,12 @@ public class PrüfzifferModel extends Observable{
 			
 		}
 		
-		System.out.println(pruefziffer);
 		pruefziffer = pruefziffer%11;
 		pruefziffer = 11-pruefziffer;
-		System.out.println(pruefziffer);
+	
 		if(pruefziffer == 10){
 			ergebnisZiffer = "X";
-			System.out.println("10!!!!");
+
 		}
 		if(pruefziffer == 11){
 			ergebnisZiffer ="0";
