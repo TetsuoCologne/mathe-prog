@@ -92,7 +92,9 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 		middleBox.add(rightMiddleBox);
 		
 		compute = new JButton("Berechnen");
+		compute.addActionListener(this);
 		clear = new JButton("clear");
+		clear.addActionListener(this);
 		buttonBox.add(compute);
 		buttonBox.add(Box.createHorizontalStrut(30));
 		buttonBox.add(clear);
@@ -107,15 +109,29 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 		this.add(mainBox);
 	}
 	
+	public void readInput(){
+		model.setInput(isbnField.getText());
+		model.berechnePruefziffer();
+	}
+	
+	public void clear(){
+		isbnField.setText("123456789");
+		prüfField.setText("");
+	}
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		prüfField.setText(String.valueOf(model.getErgebnisZiffer()));
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() == compute){
+			readInput();
+		}
+		else if(e.getSource() == clear){
+			clear();
+		}
 		
 	}
 
