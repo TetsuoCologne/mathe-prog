@@ -109,15 +109,20 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 	public void update(Observable arg0, Object arg1) {
 		if(model.getCheck()){
 			ergebnis.setBackground(Color.green);
+			ergebnis.setText("Korrekte ISBN!");
 		}
-		else ergebnis.setBackground(Color.red);
+		else {
+			ergebnis.setBackground(Color.red);
+			ergebnis.setText("Nicht korrekte ISBN!");
+		}	
 
 	}
 
 	public void readInput(){
-
+		isbnField.setText(isbnField.getText().toUpperCase());
 		model.setInput(isbnField.getText());
 		model.checkISBN();
+		
 
 	}
 
