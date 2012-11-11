@@ -7,23 +7,23 @@ public class KorrekteISBNModel extends Observable{
 	private String input;
 	private int[] isbn;
 	private boolean check;
-	
-	
+
+
 	public KorrekteISBNModel(){
 		input = "";
 		isbn = new int[10];
 		check = false;
-		
+
 	}
 	public void setInput(String input){
 		this.input = input;
-		
+
 	}
-	
+
 	public boolean getCheck(){
 		return check;
 	}
-	
+
 	/**
 	 * 	Diese Methode schiebt den ISBN-String (welcher noch Bindestriche enthält) in ein char Array.
 	 * 
@@ -31,17 +31,15 @@ public class KorrekteISBNModel extends Observable{
 	private void isbnVorbereiten(){
 		String isbnString = input.replaceAll("-", "");
 
-		
-		for(int i = 0;i<isbnString.length()-1;i++){
-			isbn[i] =Integer.valueOf(isbnString.charAt(i)+"");
+		for(int i = 0;i<isbnString.length();i++){
+			if(isbnString.charAt(i)!='X'){
+				isbn[i] = Integer.valueOf(isbnString.charAt(i)+"");
+			}
+			else isbn[i] = 10;
 		}
-		if(isbnString.charAt(9)=='X'){
-			isbn[9]=10;
-		}
-		else isbn[9] =Integer.valueOf(isbnString.charAt(9)+"");
 	}
-	
-	
+
+
 	public void checkISBN(){
 		int summe = 0;
 		int counter = 10;
@@ -50,14 +48,14 @@ public class KorrekteISBNModel extends Observable{
 			summe+=counter*isbn[i];
 			counter--;
 		}
-		
+
 		if(summe%11==0)
-		check = true;
+			check = true;
 		else check =false;
 		setChanged();
 		notifyObservers();
-		
-		
+
+
 	}
 
 

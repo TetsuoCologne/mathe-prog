@@ -68,6 +68,7 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 		isbnLabel = new JLabel("ISBN eingeben:");
 		try {
 			MaskFormatter mask = new MaskFormatter("#-#####-###-");
+			mask.setPlaceholderCharacter('0');
 			isbnField = new JFormattedTextField(mask);
 			isbnField.setText("123456789");
 		} catch (ParseException e) {

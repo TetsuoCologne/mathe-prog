@@ -1,17 +1,26 @@
 package ISBN;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
+import javax.swing.text.MaskFormatter;
 
 public class FehlendeZifferView extends JPanel implements ActionListener,Observer {
 
@@ -24,13 +33,16 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 	private JLabel heading;
 	private JLabel isbnLabel;
 	private JFormattedTextField isbnField;
-	private JButton berechnen;
+	private JButton compute;
 	private JButton clear;
-	private JLabel ergebnisLabel;
-	private JFormattedTextField ergebnisField;
+	private JLabel digitLabel;
+	private JFormattedTextField digitField;
+
+
 	
 	public FehlendeZifferView(FehlendeZifferModel model){
 		this.model = model;
+		model.addObserver(this);
 		
 		Box mainBox = Box.createVerticalBox();
 		mainBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -51,31 +63,45 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 		heading.setAlignmentX(CENTER_ALIGNMENT);
 		mainBox.add(heading);
 		
+		isbnLabel = new JLabel("Für die fehlende Ziffer bitte ein '*' eingeben:");
 		
-		isbnLabel = new JLabel("Für die fehlende Ziffer bitte ein 'Z' eingeben:");
-		isbnField = new JFormattedTextField();
+		try {
+			MaskFormatter mask = new MaskFormatter("*-*****-***-*");
+			mask.setValidCharacters("0123456789xX*");
+			mask.setPlaceholderCharacter('0');
+			isbnField = new JFormattedTextField(mask);
+			isbnField.setText("*123456789X");
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		leftMiddleBox.add(isbnLabel);
 		leftMiddleBox.add(Box.createVerticalStrut(20));
 		leftMiddleBox.add(isbnField);
-		
-		berechnen = new JButton("Berechnen");
-		berechnen.addActionListener(this);
+		isbnField.setMaximumSize(new Dimension(300, 20));
+	
+		compute = new JButton("Berechnen");
+		compute.addActionListener(this);
 		clear = new JButton("clear");
 		clear.addActionListener(this);
 		
-		rightMiddleBox.add(berechnen);
+		rightMiddleBox.add(compute);
 		rightMiddleBox.add(Box.createVerticalStrut(10));
 		rightMiddleBox.add(clear);
 		
-		ergebnisLabel = new JLabel("Ergebnis:");
-		ergebnisLabel.setAlignmentX(CENTER_ALIGNMENT);
-		ergebnisField = new JFormattedTextField();
-		ergebnisField.setAlignmentX(CENTER_ALIGNMENT);
-		
-		lowerBox.add(ergebnisLabel);
+		digitLabel = new JLabel("Ergebnis:");
+		digitLabel.setAlignmentX(CENTER_ALIGNMENT);
+		digitField = new JFormattedTextField();
+		digitField.setAlignmentX(CENTER_ALIGNMENT);
+		digitField.setEditable(false);
+
+	
+		lowerBox.add(digitLabel);
 		lowerBox.add(Box.createVerticalStrut(10));
-		lowerBox.add(ergebnisField);
-		ergebnisField.setMaximumSize(new Dimension(100, 20));
+		lowerBox.add(digitField);
+		digitField.setMaximumSize(new Dimension(100, 20));
 		
 		
 		middleBox.add(leftMiddleBox);
@@ -85,19 +111,42 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 		mainBox.add(lowerBox);
 		
 		this.add(mainBox);
+	
 		
+	}
 	
+	public void readInput(){
+		
+		isbnField.setText(isbnField.getText().toUpperCase());
+		model.setInput(isbnField.getText());
+		model.computeMissingDigit();
 	
+		try {
+			model.checkEingabe();
+		} catch (FalscheEingabeException fee) {
+			JOptionPane.showMessageDialog(this, fee.getMessage());
+		}
+		
+	}
+	
+	public void clear(){
+		isbnField.setText("*123456789X");
+		digitField.setText("");
 	}
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		digitField.setText(model.getResult());
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() == compute){
+			readInput();
+		}
+		else if(e.getSource() == clear){
+			clear();
+		}
 		
 	}
 

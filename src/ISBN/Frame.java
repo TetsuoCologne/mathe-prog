@@ -11,42 +11,34 @@ public class Frame extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param args
-	 */
-
 	public Frame(){
 		super("ISBN");
-		addWindowListener(new WindowAdapter() {
-			public void windowclosing(WindowEvent e){
-				System.exit(0);
-			}
-		});
-		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
 		PrüfzifferModel prüfZifferModel = new PrüfzifferModel();
 		KorrekteISBNModel korrektModel = new KorrekteISBNModel();
 		FehlendeZifferModel fehlendeZifferModel = new FehlendeZifferModel();
-		
+
 		PrüfzifferView prüfzifferKorrektheit = new PrüfzifferView(prüfZifferModel);
 		KorrektView korrektView = new KorrektView(korrektModel);
 		FehlendeZifferView fehlendeZiffer = new FehlendeZifferView(fehlendeZifferModel);
-		
-	
+
+
 		JTabbedPane pane = new JTabbedPane();
 		pane.add("Prüfzifferberechnung",prüfzifferKorrektheit);
 		pane.add("Korrektheit überprüfen",korrektView);
 		pane.add("Fehlende Ziffer ergänzen",fehlendeZiffer);
-		
+
 		getContentPane().add(pane);
 		setPreferredSize(new Dimension(700, 300));
 		pack();
-		
+
 	}
-	
+
 	public static void main(String args[]){
 		Frame frame = new Frame();
 		frame.setVisible(true);
-	
+
 	}
 
 }
