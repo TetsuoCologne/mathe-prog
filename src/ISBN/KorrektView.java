@@ -65,9 +65,10 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 
 		isbnLabel = new JLabel("ISBN eingeben:");
 		try {
-			MaskFormatter maskPrüf = new MaskFormatter("#-#####-###-A");
-			maskPrüf.setValidCharacters("0123456789Xx");
-			isbnField = new JFormattedTextField(maskPrüf);
+			MaskFormatter mask = new MaskFormatter("#-#####-###-A");
+			mask.setValidCharacters("0123456789Xx");
+			mask.setPlaceholderCharacter('0');
+			isbnField = new JFormattedTextField(mask);
 			isbnField.setText("1234567890");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
