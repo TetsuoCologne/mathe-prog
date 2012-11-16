@@ -1,6 +1,6 @@
 package ISBN;
 
-import java.awt.Dimension;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -14,29 +14,27 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
-
+/**
+ * 	Diese Klasse erstellt die View für die Prüfziffer - Berechnung.
+ */
 public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
-	private PrüfzifferModel model;
+	private PruefzifferModel model;
 	private JLabel headline;
 	private JLabel isbnLabel;
 	private JFormattedTextField isbnField;
-	private JLabel prüfLabel;
-	private JTextField prüfField;
+	private JLabel pruefLabel;
+	private JTextField pruefField;
 	private JButton compute;
 	private JButton clear;
-	private JFormattedTextField isbnPrüfField;
-	private JButton prüfButton;
+
 	
 	
-	public PrüfzifferView(PrüfzifferModel model){
+	public PrüfzifferView(PruefzifferModel model){
 		
 		this.model = model;
 		model.addObserver(this);
@@ -82,12 +80,12 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 		leftMiddleBox.add(isbnField);
 
 		
-		prüfLabel =new JLabel("Prüfziffer:");
-		prüfField = new JTextField();
-		prüfField.setEditable(false);
-		rightMiddleBox.add(prüfLabel);
+		pruefLabel =new JLabel("Prüfziffer:");
+		pruefField = new JTextField();
+		pruefField.setEditable(false);
+		rightMiddleBox.add(pruefLabel);
 		rightMiddleBox.add(Box.createVerticalStrut(10));
-		rightMiddleBox.add(prüfField);
+		rightMiddleBox.add(pruefField);
 		
 		middleBox.add(leftMiddleBox);
 		middleBox.add(rightMiddleBox);
@@ -117,11 +115,11 @@ public class PrüfzifferView extends JPanel implements ActionListener,Observer{
 	
 	public void clear(){
 		isbnField.setText("123456789");
-		prüfField.setText("");
+		pruefField.setText("");
 	}
 	@Override
 	public void update(Observable o, Object arg) {
-		prüfField.setText(String.valueOf(model.getErgebnisZiffer()));
+		pruefField.setText(String.valueOf(model.getErgebnisZiffer()));
 		
 	}
 

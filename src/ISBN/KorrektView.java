@@ -12,20 +12,16 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import Wochentagsberechnung.FalscherMonatException;
-import Wochentagsberechnung.FalschesJahrException;
-import Wochentagsberechnung.TagNichtImMonatException;
-
+/**
+ * 	Diese Klasse stellt die View für die Korrektheitsprüfung dar.
+ */
 public class KorrektView extends JPanel implements ActionListener, Observer{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 
@@ -123,7 +119,6 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 		isbnField.setText(isbnField.getText().toUpperCase());
 		model.setInput(isbnField.getText());
 		model.checkISBN();
-		
 
 	}
 
@@ -136,10 +131,9 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == pruefen){
 			readInput();
-			
-			
 		}
-		else clear();
+		else if(e.getSource() == clear)
+			clear();
 
 
 	}
