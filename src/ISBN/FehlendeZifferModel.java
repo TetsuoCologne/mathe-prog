@@ -1,7 +1,12 @@
 package ISBN;
 
 import java.util.Observable;
-
+/**
+ * 	Diese Klasse beinhaltet das Einlesen einer unvollständigen ISBN Nummer und die Berechnung der fehlenden Ziffer.
+ * 	
+ * @author Marc Fiedler, Franziska Krebs
+ *
+ */
 public class FehlendeZifferModel extends Observable{
 
 	private String input;
@@ -27,10 +32,12 @@ public class FehlendeZifferModel extends Observable{
 
 
 	/**
-	 * 	Diese Methode iteriert den eingegeben String durch und erlaubt nur ein '*' als Eingabe.
+	 * 	Diese Methode iteriert den eingegeben String durch und erlaubt genau ein '*' als Eingabe.
 	 * 	Weiterhin darf nur an der letzten Stelle ein 'X' eingegeben werden.
 	 * @return
-	 * @throws FalscheEingabeException 
+	 * @throws FalscheEingabeException Wird geworfen, wenn
+	 * 		- ein * kein- oder mehrmals vorkommt
+	 * 		- ein X an den ersten 9 Stellen vorkommt
 	 */
 	public void checkEingabe() throws FalscheEingabeException{
 		boolean correctStar =true;
@@ -47,10 +54,15 @@ public class FehlendeZifferModel extends Observable{
 				correctXPosition = false;
 			}
 		}
+		if(counterStar== 0)throw new FalscheEingabeException("Bitte geben Sie ein * für die fehlende Ziffer ein!");
 		if(counterStar>=2) throw new FalscheEingabeException("Bitte nur ein * !"); 
 		if(!correctStar || !correctXPosition) throw new FalscheEingabeException("Ein X ist nur an der letzten Stelle erlaubt!");
 	}
 
+	/** 
+	 * 	Diese Methode löscht aus dem eingegeben String alle Bindestriche raus und castet den String in einzelne Integer. Das X an der letzten
+	 * 	Stelle wird dabei zur 10. Für die fehlende ziffer wird eine Null eingetragen und der Index dieser Ziffer wird vermerkt.
+	 */
 	private void isbnVorbereiten(){
 		String isbnString = input.replaceAll("-", "");
 
@@ -67,6 +79,11 @@ public class FehlendeZifferModel extends Observable{
 
 	}
 
+	/**
+	 * 	Diese Methode berechnet die fehlende Ziffer. Dabei wird zunächst die Summe nach dem Prüfziffer-Algorithmus berechnet.
+	 * 	Anschließend wird mittels einer Schleife die Ziffer eingesetzt und überprüft, wann das Ergebnis%11 == 0 ergibt. 
+	 * 	Zuletzt wird für eine 10 an der letzten Stelle ein X eingesetzt.
+	 */
 	public void computeMissingDigit(){
 		isbnVorbereiten();
 		int summe = 0;
