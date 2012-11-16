@@ -3,7 +3,7 @@ package ISBN;
 import java.util.Observable;
 /**
  * 	Diese Klasse überpüft, ob eine korrekte ISBN eingegeben wurde.
- * @author franzi
+ * @author Marc Fiedler, Franziska Krebs
  *
  */
 public class KorrekteISBNModel extends Observable{
