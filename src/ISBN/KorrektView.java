@@ -87,6 +87,7 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 		rightBox.add(clear);
 
 		ergebnis = new JTextField("");
+		ergebnis.setText("Warten auf Eingabe");
 		ergebnis.setBackground(Color.cyan);
 		ergebnis.addActionListener(this);
 		ergebnis.setEditable(false);
@@ -124,6 +125,7 @@ public class KorrektView extends JPanel implements ActionListener, Observer{
 
 	public void clear(){
 		ergebnis.setBackground(Color.cyan);
+		ergebnis.setText("Warten auf Eingabe");
 		isbnField.setText("1234567890");
 	}
 	
