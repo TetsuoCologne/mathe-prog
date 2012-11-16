@@ -1,7 +1,11 @@
 package ISBN;
 
 import java.util.Observable;
-
+/**
+ * 	Diese Klasse überpüft, ob eine korrekte ISBN eingegeben wurde.
+ * @author franzi
+ *
+ */
 public class KorrekteISBNModel extends Observable{
 
 	private String input;
@@ -25,7 +29,8 @@ public class KorrekteISBNModel extends Observable{
 	}
 
 	/**
-	 * 	Diese Methode schiebt den ISBN-String (welcher noch Bindestriche enthält) in ein char Array.
+	 * 	Diese Methode schiebt den ISBN-String (welcher noch Bindestriche enthält) in ein char Array. Steht an der letzten Stelle ein 'X', wird 
+	 * 	dieses durch eine 10 ersetzt.
 	 * 
 	 */
 	private void isbnVorbereiten(){
@@ -39,7 +44,9 @@ public class KorrekteISBNModel extends Observable{
 		}
 	}
 
-
+	/**
+	 * 	Diese Methode berechnet die Summe nach dem Schema 10a + 9b + 8c... und überprüft anschließend, ob die Summe%11 == 0 ergibt.
+	 */
 	public void checkISBN(){
 		int summe = 0;
 		int counter = 10;

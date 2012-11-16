@@ -1,16 +1,20 @@
 package ISBN;
 
 import java.util.Observable;
-import java.util.Observer;
 
-public class PrüfzifferModel extends Observable{
+/**
+ * 	Diese Klasse stellt eine Methode zur Verfügung, die die Prüfziffer einer ISBN-10 berechnet.
+ * @author Marc Fiedler, Franziska Krebs
+ *
+ */
+public class PruefzifferModel extends Observable{
 
 	private String input;
 	private int [] isbn;
 	private String ergebnisZiffer;
 	private int pruefziffer;
 
-	public PrüfzifferModel(){
+	public PruefzifferModel(){
 		input = "";
 		isbn = new int[9];
 		pruefziffer = 0;
@@ -29,7 +33,12 @@ public class PrüfzifferModel extends Observable{
 		return ergebnisZiffer;
 	}
 
-
+/**
+ * 	Diese Methode ersetzt erst alle Bindestriche durch Leerzeichen und schiebt dann die einzelnen Chars in ein Integer-Array.
+ * 	Schließend werden alle Werte einzeln mit 10 absteigend multipliziert und aufsummiert. Dann folgt Summe%11. Das Ergebnis wird anschließend von 11 
+ * 	abgezogen. 
+ * 	  
+ */
 	public void berechnePruefziffer(){
 		String isbnString = input.replaceAll("-", "");
 		int counter  = 10;
