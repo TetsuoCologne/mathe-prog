@@ -83,13 +83,12 @@ public class FehlendeZifferModel extends Observable{
 	 * 	Diese Methode berechnet die fehlende Ziffer. Dabei wird zunächst die Summe nach dem Prüfziffer-Algorithmus berechnet.
 	 * 	Anschließend wird mittels einer Schleife die Ziffer eingesetzt und überprüft, wann das Ergebnis%11 == 0 ergibt. 
 	 * 	Zuletzt wird für eine 10 an der letzten Stelle ein X eingesetzt.
+	 * @throws UndefinierteISBNException Wird geworfen, wenn die fehlende Ziffer eine 10 ergibt und nicht an der letzten Stelle fehlt! 
 	 */
-	public void computeMissingDigit(){
+	public void computeMissingDigit() throws UndefinierteISBNException{
 		isbnVorbereiten();
 		int summe = 0;
 		int counter = 10;
-		isbnVorbereiten();
-		
 
 		for(int i = 0;i<isbn.length;i++){
 			summe+=counter*isbn[i];
@@ -102,7 +101,10 @@ public class FehlendeZifferModel extends Observable{
 			}
 		}
 		if(ziffer == 10){
+			if(zifferIndex==1){
 			result = "X";
+			}
+			else throw new 	UndefinierteISBNException("Die fehlende Ziffer wäre eine 10, ist so nicht erlaubt!"); 
 		}
 		else result = String.valueOf(ziffer);
 		setChanged();
