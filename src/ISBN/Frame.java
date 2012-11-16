@@ -26,9 +26,9 @@ public class Frame extends JFrame{
 
 
 		JTabbedPane pane = new JTabbedPane();
-		pane.add("Prüfzifferberechnung",pruefzifferKorrektheit);
-		pane.add("Korrektheit überprüfen",korrektView);
-		pane.add("Fehlende Ziffer ergänzen",fehlendeZiffer);
+		pane.add("Pruefzifferberechnung",pruefzifferKorrektheit);
+		pane.add("Korrektheit ueberprüfen",korrektView);
+		pane.add("Fehlende Ziffer ergaenzen",fehlendeZiffer);
 
 		getContentPane().add(pane);
 		setPreferredSize(new Dimension(700, 300));

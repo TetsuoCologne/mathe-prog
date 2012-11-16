@@ -115,10 +115,12 @@ public class FehlendeZifferView extends JPanel implements ActionListener,Observe
 		
 		isbnField.setText(isbnField.getText().toUpperCase());
 		model.setInput(isbnField.getText());
-		model.computeMissingDigit();
-	
 		try {
+			model.computeMissingDigit();
 			model.checkEingabe();
+		} catch (UndefinierteISBNException uie) {
+			JOptionPane.showMessageDialog(this, uie.getMessage());
+
 		} catch (FalscheEingabeException fee) {
 			JOptionPane.showMessageDialog(this, fee.getMessage());
 		}
