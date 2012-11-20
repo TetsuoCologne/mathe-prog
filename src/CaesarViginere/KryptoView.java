@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,11 +14,13 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class KryptoView extends JPanel implements Observer, ActionListener{
 
@@ -37,7 +40,8 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 	private JButton clearChiffre;
 	private JLabel keyLabel;
 	private JTextField keyField;
-	
+	private JFileChooser chooser;
+	private FileNameExtensionFilter filter;
 	private CaesarModel caesarModel;
 	private ViginereModel vigModel;
 	private JScrollPane scrollpane;
@@ -67,7 +71,9 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		
 		Box upperBox = Box.createHorizontalBox();
 		loadKlartext = new JButton("Klartext laden");
+		loadKlartext.addActionListener(this);
 		loadChiffretext = new JButton("Chiffretext laden");
+		loadChiffretext.addActionListener(this);
 		upperBox.add(loadKlartext);
 		upperBox.add(Box.createHorizontalStrut(90));
 		upperBox.add(loadChiffretext);
@@ -94,9 +100,9 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		
 		Box midMiddleBox = Box.createVerticalBox();
 		
-		ImageIcon icon = new ImageIcon("PfeilRechts.jpg");
-		icon.setImage(icon.getImage().getScaledInstance(100	, 100, Image.SCALE_DEFAULT));
-		chiffrieren = new JButton(icon);
+//		ImageIcon icon = new ImageIcon("PfeilRechts.jpg");
+//		icon.setImage(icon.getImage().getScaledInstance(100	, 100, Image.SCALE_DEFAULT));
+		chiffrieren = new JButton("Chiffrieren");
 		
 		dechiffrieren = new JButton("Dechiffrieren");
 		
@@ -146,10 +152,21 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public void loadData(){
+		File currentDir = null;
+		chooser = new JFileChooser(currentDir);
+		chooser.setFileFilter(new FileNameExtensionFilter("Text", "txt"));
+		chooser.showOpenDialog(null);
+		
+		
+		
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == loadKlartext){
+			loadData();
+		}
 		
 	}
 
