@@ -237,7 +237,7 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		else if(e.getSource() == clearPlain){
 			plainText.setText("");
 		}
-		else if(e.getSource() == chiffreText){
+		else if(e.getSource() == clearChiffre){
 			chiffreText.setText("");
 		}
 
