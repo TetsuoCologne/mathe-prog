@@ -3,6 +3,8 @@ package CaesarViginere;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 /**
@@ -36,7 +38,9 @@ public class Frame extends JFrame{
 	public static void main(String args[]){
 		Frame frame = new Frame();
 		frame.setVisible(true);
-		
+		ArrayList<Character> al = new ArrayList<>();
+		al.add('a');
+		System.out.println(al.indexOf('a'));
 		
 	}
 }
