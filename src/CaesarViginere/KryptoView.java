@@ -1,32 +1,32 @@
 package CaesarViginere;
 
 import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Box;
-import javax.swing.ImageIcon;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -35,8 +35,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class KryptoView extends JPanel implements Observer, ActionListener{
 
 
-	private JCheckBox caesar;
-	private JCheckBox viginere;
+	private ButtonGroup bgroup;
+	private JRadioButton caesar;
+	private JRadioButton viginere;
 	private JLabel auswahl;
 	private JButton loadKlartext;
 	private JButton loadChiffretext;
@@ -62,7 +63,8 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 	public KryptoView(CaesarModel caModel, ViginereModel vigModel){
 		this.caesarModel = caModel;
 		this.vigModel = vigModel;
-
+		caModel.addObserver(this);
+		vigModel.addObserver(this);
 
 
 		Box mainBox = Box.createVerticalBox();
@@ -73,9 +75,11 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		heading.add(auswahl);
 
 		Box firstBox = Box.createHorizontalBox();
-		caesar = new JCheckBox("Caesar-Code", false);
-		viginere = new JCheckBox("Viginere-Code", false);
-
+		caesar = new JRadioButton("Caesar-Code", false);
+		viginere = new JRadioButton("Viginere-Code", false);
+		bgroup = new ButtonGroup();
+		bgroup.add(caesar);
+		bgroup.add(viginere);
 
 		firstBox.add(caesar);
 		firstBox.add(Box.createHorizontalStrut(100));
@@ -108,24 +112,77 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 
 
 		Box middleBox = Box.createHorizontalBox();
-
-
 		Box midMiddleBox = Box.createVerticalBox();
 
 		chiffrieren = new JButton("Chiffrieren");
+		chiffrieren.addActionListener(this);
 		dechiffrieren = new JButton("Dechiffrieren");
-
+		dechiffrieren.addActionListener(this);
 
 		midMiddleBox.add(chiffrieren);
 		midMiddleBox.add(Box.createVerticalStrut(10));
 		midMiddleBox.add(dechiffrieren);
 
 		chiffreText = new JTextArea();
+		chiffreText.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				if(!chiffreText.getText().equals("")){
+					plainText.setEditable(false);
+					plainText.setBackground(Color.lightGray);
+				}
+				else{
+					plainText.setEditable(true);
+					plainText.setBackground(Color.white);
+				}
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		chiffreText.setLineWrap(true);
 		scrollpaneChiffre = new JScrollPane(chiffreText);
 		scrollpaneChiffre.setPreferredSize(new Dimension(200, 200));
 
 		plainText = new JTextArea();
+		plainText.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(!plainText.getText().equals("")){
+					chiffreText.setEditable(false);
+					chiffreText.setBackground(Color.lightGray);
+				}
+				else{
+					chiffreText.setEditable(true);
+					chiffreText.setBackground(Color.white);
+				}
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		plainText.setLineWrap(true);
 		scrollpanePlain = new JScrollPane(plainText);
 		scrollpanePlain.setPreferredSize(new Dimension(200, 200));
@@ -164,10 +221,6 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 
 	}
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public String loadData(){
@@ -180,72 +233,112 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		StringBuilder sb = new StringBuilder();
 
 		File input = chooser.getSelectedFile();
+		if(input!=null){
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(input));
+				String a="";
 
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(input));
-			String a="";
+				while(a!=null){
 
-			while(a!=null){
+					sb.append(a);
+					a = br.readLine();
 
-				System.out.println(a);
-				sb.append(a);
-				a = br.readLine();
+				}		
+				br.close();
 
-			}		
-			br.close();
-
-
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(this, "Die Datei existiert nicht!");
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Input Fehler");
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(this, "Die Datei existiert nicht!");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, "Input Fehler");
+			}
 		}
 
 		return sb.toString().toLowerCase();
+
 	}
 
-	public String normalizeInput(String input){
-		char [] zeichen = input.toCharArray();
-		StringBuilder output = new StringBuilder();
-
-		for(int i = 0;i<zeichen.length;i++){
-			if(Character.isLetter(zeichen[i])){
-
-				switch(zeichen[i]){
-				case 'ß':output.append("ss");
-				break;
-				case 'ä': 	output.append("ae");
-				break;
-				case 'ö': 	output.append("oe");
-				break;
-				case 'ü':	output.append("ue");
-				break;
-				default:output.append(zeichen[i]);
-				}
-			}
-		}
-		return output.toString();
+	public void readInputDechiffrierenViginere() throws EingabeException{
+		vigModel.setKey(keyField.getText());
+		vigModel.setChiffrat(chiffreText.getText());
 	}
+
+	public void readInputChiffrierenViginere() throws EingabeException{
+		vigModel.setKey(keyField.getText());
+		vigModel.setPlain(plainText.getText());
+
+	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource() == loadKlartext){
-			plainText.setText(normalizeInput(loadData()));
+			if(!chiffreText.getText().equals(""))
+				JOptionPane.showMessageDialog(this, "Es kann nur eine Eingabe erfolgen!");
+			else plainText.setText(loadData());
 		}else if(e.getSource() == loadChiffretext){
-			chiffreText.setText(normalizeInput(loadData()).toUpperCase());
+			if(!plainText.getText().equals(""))
+				JOptionPane.showMessageDialog(this, "Es kann nur eine Eingabe erfolgen!");
+			else chiffreText.setText(loadData().toUpperCase());
 		}
 		else if(e.getSource() == clearPlain){
 			plainText.setText("");
+			plainText.setEditable(true);
+			plainText.setBackground(Color.white);
 		}
 		else if(e.getSource() == clearChiffre){
 			chiffreText.setText("");
+			chiffreText.setEditable(true);
+			chiffreText.setBackground(Color.white);
 		}
+		else if(e.getSource() == chiffrieren){
+			if(viginere.isSelected()){
+				try {
+					readInputChiffrierenViginere();
+					plainText.setText(vigModel.getPlain());
+					keyField.setText(vigModel.getKey());
+					vigModel.chiffrieren();
+
+				} catch (EingabeException ee) {
+					JOptionPane.showMessageDialog(this, ee.getMessage());
+				}
+
+			}
+			else if(caesar.isSelected()){
+
+			}
+			else JOptionPane.showMessageDialog(this, "Bitte wählen Sie einen Algorithmus aus!");
+
+		}
+		else if (e.getSource() == dechiffrieren){
+			if(viginere.isSelected()){
+				try {
+					readInputDechiffrierenViginere();
+					chiffreText.setText(vigModel.getChiffrat());
+					keyField.setText(vigModel.getKey());
+					vigModel.dechiffrieren();
+
+				} catch (EingabeException ee) {
+					JOptionPane.showMessageDialog(this, ee.getMessage());
+				}
+
+			}
+			else if(caesar.isSelected()){
+
+			}	
+			else JOptionPane.showMessageDialog(this, "Bitte wählen Sie einen Algorithmus aus!");
+
+		}	
+
 
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		chiffreText.setText(vigModel.getChiffrat());
+		plainText.setText(vigModel.getPlain());
+
 
 	}
 
