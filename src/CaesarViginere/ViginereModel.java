@@ -99,21 +99,12 @@ public class ViginereModel extends Observable{
 
 	public void chiffrieren(){
 
-		int [] chiffre = new int[plain.length()];
-		char [] plainArray = plain.toCharArray();
-		char [] keyArray = key.toCharArray();
-		StringBuilder chiffrat = new StringBuilder();
+		char [] keyArray = key.toCharArray();	
 		
-		for(int i = 0;i<chiffre.length;i++){
-			
-			chiffre[i] = (alphabet.indexOf(plainArray[i]) + alphabet.indexOf(keyArray[i%key.length()]))%26;
+		for(int i = 0;i<plain.length();i++){
+			chiffrat+= alphabet.get((alphabet.indexOf(plain.charAt(i)) + alphabet.indexOf(keyArray[i%key.length()]))%26);
 		}
 
-		for(int i = 0;i<chiffre.length;i++){
-			chiffrat.append(alphabet.get(chiffre[i]));
-		}
-		this.chiffrat = chiffrat.toString();
-	
 		setChanged();
 		notifyObservers();
 
@@ -123,7 +114,6 @@ public class ViginereModel extends Observable{
 		int [] plainArray = new int[chiffrat.length()];
 		char [] chiffratArray = chiffrat.toCharArray();
 		char [] keyArray = key.toCharArray();
-		StringBuilder plain = new StringBuilder();
 		
 		for(int i = 0;i<plainArray.length;i++){
 			plainArray[i] = (alphabet.indexOf(chiffratArray[i])) - alphabet.indexOf(keyArray[i%key.length()]);
@@ -131,10 +121,9 @@ public class ViginereModel extends Observable{
 		}
 		
 		for(int i = 0;i<plainArray.length;i++){
-			plain.append(alphabet.get(plainArray[i]));
+			plain+=(alphabet.get(plainArray[i]));
 		}
-		this.plain = plain.toString();
-		System.out.println(this.plain);
+		
 		setChanged();
 		notifyObservers();
 	}
