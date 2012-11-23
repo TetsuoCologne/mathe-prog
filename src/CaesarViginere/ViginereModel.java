@@ -74,6 +74,7 @@ public class ViginereModel extends Observable{
 	public String getKey(){
 		return key;
 	}
+	
 	public String normalizeInput(String input){
 		char [] zeichen = input.toCharArray();
 		StringBuilder output = new StringBuilder();
@@ -100,6 +101,7 @@ public class ViginereModel extends Observable{
 	public void chiffrieren(){
 
 		char [] keyArray = key.toCharArray();	
+		chiffrat ="";
 		
 		for(int i = 0;i<plain.length();i++){
 			chiffrat+= alphabet.get((alphabet.indexOf(plain.charAt(i)) + alphabet.indexOf(keyArray[i%key.length()]))%26);
@@ -114,7 +116,7 @@ public class ViginereModel extends Observable{
 		int [] plainArray = new int[chiffrat.length()];
 		char [] chiffratArray = chiffrat.toCharArray();
 		char [] keyArray = key.toCharArray();
-		
+		plain =" ";
 		for(int i = 0;i<plainArray.length;i++){
 			plainArray[i] = (alphabet.indexOf(chiffratArray[i])) - alphabet.indexOf(keyArray[i%key.length()]);
 			if(plainArray[i]<0)plainArray[i] = plainArray[i] + 26;

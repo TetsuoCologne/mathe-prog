@@ -53,19 +53,22 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 	private JTextField keyField;
 	private JFileChooser chooser;
 	private FileNameExtensionFilter filter;
-	private CaesarModel caesarModel;
-	private ViginereModel vigModel;
+	//private CaesarModel caesarModel;
+	//private ViginereModel vigModel;
+	private Verschluesselung model;
 	private JScrollPane scrollpanePlain;
 	private JScrollPane scrollpaneChiffre;
 
 
 
-	public KryptoView(CaesarModel caModel, ViginereModel vigModel){
-		this.caesarModel = caModel;
-		this.vigModel = vigModel;
-		caModel.addObserver(this);
-		vigModel.addObserver(this);
+	public KryptoView(Verschluesselung model){
+		//this.caesarModel = caModel;
+		//this.vigModel = vigModel;
+		//caModel.addObserver(this);
+		//vigModel.addObserver(this);
 
+		this.model = model;
+		model.addObserver(this);
 
 		Box mainBox = Box.createVerticalBox();
 		mainBox.add(Box.createVerticalStrut(10));
@@ -124,65 +127,11 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		midMiddleBox.add(dechiffrieren);
 
 		chiffreText = new JTextArea();
-		chiffreText.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				if(!chiffreText.getText().equals("")){
-					plainText.setEditable(false);
-					plainText.setBackground(Color.lightGray);
-				}
-				else{
-					plainText.setEditable(true);
-					plainText.setBackground(Color.white);
-				}
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		chiffreText.setLineWrap(true);
 		scrollpaneChiffre = new JScrollPane(chiffreText);
 		scrollpaneChiffre.setPreferredSize(new Dimension(200, 200));
 
 		plainText = new JTextArea();
-		plainText.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(!plainText.getText().equals("")){
-					chiffreText.setEditable(false);
-					chiffreText.setBackground(Color.lightGray);
-				}
-				else{
-					chiffreText.setEditable(true);
-					chiffreText.setBackground(Color.white);
-				}
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		plainText.setLineWrap(true);
 		scrollpanePlain = new JScrollPane(plainText);
 		scrollpanePlain.setPreferredSize(new Dimension(200, 200));
@@ -258,16 +207,31 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 	}
 
 	public void readInputDechiffrierenViginere() throws EingabeException{
-		vigModel.setKey(keyField.getText());
-		vigModel.setChiffrat(chiffreText.getText());
+		model.setKeyViginere(keyField.getText());
+		model.setChiffrat(chiffreText.getText());
 	}
 
 	public void readInputChiffrierenViginere() throws EingabeException{
-		vigModel.setKey(keyField.getText());
-		vigModel.setPlain(plainText.getText());
+		model.setKeyViginere(keyField.getText());
+		model.setPlain(plainText.getText());
 
 	}
 
+	public void readInputChiffrierenCaesar() throws EingabeException{
+//		if(keyField.getText().length()!=1) throw new EingabeException("Bitte geben Sie für den Key genau ein Zeichen ein!");
+//		else{
+			model.setKeyCaesar(keyField.getText());
+			model.setPlain(plainText.getText());
+		//}
+	}
+
+
+	public void readInputDechiffrierenCaesar() throws EingabeException{
+
+		model.setKeyCaesar(keyField.getText());
+		model.setChiffrat(chiffreText.getText());
+
+	}
 
 
 	@Override
@@ -284,21 +248,19 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 		}
 		else if(e.getSource() == clearPlain){
 			plainText.setText("");
-			plainText.setEditable(true);
-			plainText.setBackground(Color.white);
+
 		}
 		else if(e.getSource() == clearChiffre){
 			chiffreText.setText("");
-			chiffreText.setEditable(true);
-			chiffreText.setBackground(Color.white);
+
 		}
 		else if(e.getSource() == chiffrieren){
 			if(viginere.isSelected()){
 				try {
 					readInputChiffrierenViginere();
-					plainText.setText(vigModel.getPlain());
-					keyField.setText(vigModel.getKey());
-					vigModel.chiffrieren();
+					plainText.setText(model.getPlain());
+					keyField.setText(model.getKeyViginere());
+					model.chiffrierenViginere();
 
 				} catch (EingabeException ee) {
 					JOptionPane.showMessageDialog(this, ee.getMessage());
@@ -306,6 +268,15 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 
 			}
 			else if(caesar.isSelected()){
+				try {
+					readInputChiffrierenCaesar();
+					plainText.setText(model.getPlain());
+					keyField.setText(String.valueOf(model.getKeyCaesar()));
+					model.chiffrierenCaesar();
+
+				} catch (EingabeException ee) {
+					JOptionPane.showMessageDialog(this, ee.getMessage());
+				}
 
 			}
 			else JOptionPane.showMessageDialog(this, "Bitte wählen Sie einen Algorithmus aus!");
@@ -315,9 +286,9 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 			if(viginere.isSelected()){
 				try {
 					readInputDechiffrierenViginere();
-					chiffreText.setText(vigModel.getChiffrat());
-					keyField.setText(vigModel.getKey());
-					vigModel.dechiffrieren();
+					chiffreText.setText(model.getChiffrat());
+					keyField.setText(model.getKeyViginere());
+					model.dechiffrierenViginere();
 
 				} catch (EingabeException ee) {
 					JOptionPane.showMessageDialog(this, ee.getMessage());
@@ -325,7 +296,14 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 
 			}
 			else if(caesar.isSelected()){
-
+				try {
+					readInputDechiffrierenCaesar();
+					chiffreText.setText(model.getChiffrat());
+					keyField.setText(String.valueOf(model.getKeyCaesar()));
+					model.dechiffrierenCaesar();
+				} catch (EingabeException e1) {
+					JOptionPane.showMessageDialog(this, e1.getMessage());
+				}
 			}	
 			else JOptionPane.showMessageDialog(this, "Bitte wählen Sie einen Algorithmus aus!");
 
@@ -336,8 +314,14 @@ public class KryptoView extends JPanel implements Observer, ActionListener{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		chiffreText.setText(vigModel.getChiffrat());
-		plainText.setText(vigModel.getPlain());
+		if(caesar.isSelected()){
+			chiffreText.setText(model.getChiffrat());
+			plainText.setText(model.getPlain());
+
+		}if(viginere.isSelected()){
+			chiffreText.setText(model.getChiffrat());
+			plainText.setText(model.getPlain());
+		}
 
 
 	}

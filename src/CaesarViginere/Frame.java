@@ -26,9 +26,10 @@ public class Frame extends JFrame{
 			}
 			
 		});
-		CaesarModel caModel = new CaesarModel();
-		ViginereModel vigModel = new ViginereModel();
-		KryptoView view = new KryptoView(caModel, vigModel);
+		Verschluesselung model = new Verschluesselung();
+//		CaesarModel caModel = new CaesarModel();
+//		ViginereModel vigModel = new ViginereModel();
+		KryptoView view = new KryptoView(model);
 		this.getContentPane().add(view);
 		setPreferredSize(new Dimension(800, 500));
 		pack();

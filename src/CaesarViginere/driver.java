@@ -7,8 +7,7 @@ public class driver {
 	 */
 	public static void main(String[] args) {
 		CaesarModel ca = new CaesarModel();
-		ca.setPlain("ichliebemeinbaerchen");
-		ca.setKey('x');
+	
 		ca.chiffrierenCaesar();
 
 	}
