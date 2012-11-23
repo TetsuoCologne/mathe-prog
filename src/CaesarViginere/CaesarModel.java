@@ -45,31 +45,65 @@ public class CaesarModel extends Observable{
 	
 	}
 	
-	public void setKey(Character key){
-		this.key =key;
+	public void setKey(char key) throws EingabeException{
+		if(key =='ä' || key=='ö' || key =='ü' || key =='ß') throw new EingabeException("Bitte kein "+key + " als Eingabe benutzen!"); 
+		else this.key =key;
 	}
 	
-	public void setPlain(String plain){
-		this.plain =plain;
+	public char getKey(){
+		return key;
+	}
+	
+	public void setPlain(String plain) throws EingabeException{
+		if(plain.isEmpty()) throw new EingabeException("Bitte geben sie einen Klartext ein!");
+		else this.plain =normalizeInput(plain);
 	}
 	
 	public String getPlain(){
 		return plain;
 	}
 	
-	public void setChiffrat(String chiffrat){
-		this.chiffrat=chiffrat;
+	public void setChiffrat(String chiffrat) throws EingabeException{
+		if(chiffrat.isEmpty()) throw new EingabeException("Bitte geben Sie einen chiffrierten Text ein!");
+		else this.chiffrat=normalizeInput(chiffrat);
 	}
 	
 	public String getChiffrat(){
 		return chiffrat.toUpperCase();
 	}
 
+	public String normalizeInput(String input){
+		char [] zeichen = input.toCharArray();
+		StringBuilder output = new StringBuilder();
+
+		for(int i = 0;i<zeichen.length;i++){
+			if(Character.isLetter(zeichen[i])){
+
+				switch(zeichen[i]){
+				case 'ß':output.append("ss");
+				break;
+				case 'ä': 	output.append("ae");
+				break;
+				case 'ö': 	output.append("oe");
+				break;
+				case 'ü':	output.append("ue");
+				break;
+				default:output.append(zeichen[i]);
+				}
+			}
+		}
+		return output.toString();
+	}
+	
 	public void chiffrierenCaesar(){
-		int zeichen = alphabet.indexOf(key);		
+		int zeichen = alphabet.indexOf(key);	
+		chiffrat = "";
+		
 		for(int i =0;i<plain.length();i++){
 			chiffrat += String.valueOf(alphabet.get((alphabet.indexOf(plain.charAt(i)) + zeichen)%26));
 		}
-		System.out.println(chiffrat);
+		setChanged();
+		notifyObservers();
+		
 	}
 }
