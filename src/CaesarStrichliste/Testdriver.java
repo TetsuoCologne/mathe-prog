@@ -36,7 +36,7 @@ public class Testdriver {
 		map.put('Z', new Integer(114));  
 		
 		
-		
+		//Einfügen der einzelnen elemente der chiffre char
 		Strichliste<Character> test = new Strichliste<Character>();
 		String a="ebtjtufjouftu";
 		a = a.toUpperCase();
@@ -51,7 +51,7 @@ public class Testdriver {
 		int w=0;
 		double[] Array = new double[26];
 		for(int j=0;j<26;j++){
-			
+			//Aufbau der Strichliste die 26 mal rotiert um die chiffre Strichliste
 			Strichliste<Character> deutsch = new Strichliste<Character>(map);
 			HashMap<Character,Integer>mapTwo=new HashMap<Character,Integer>();
 			
@@ -79,6 +79,8 @@ public class Testdriver {
 		
 		}
 		//System.out.println(mapThree.entrySet());
+		
+		//Sortieren der wahrscheinlichkeiten
 		double[] q=new double[26];
 		  for(int i=0;i<26;i++){
 			  Arrays.sort(Array);
@@ -90,7 +92,7 @@ public class Testdriver {
 		  for(int i1=0; i1 < a.length(); i1++){
 				double b = a.charAt(i1);
 			
-				
+			//Einschranken der Char werte zum beispiel Z ist A und kleiner A ist Z also einen Alphabetischen Kreis erzeugen	
 			b=b-mapThree.get(q[i]);
 			if(b>=91){
 				b=65+(b-91);			
