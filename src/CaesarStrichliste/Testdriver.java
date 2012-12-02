@@ -102,26 +102,7 @@ public class Testdriver {
 			}
 			System.out.println((char)b);
 		}}
-		/*		
-	//System.out.println(mapThree.get(Array[0]));
-	Arrays.sort(Array);
-	for(int i=0;i<25;i++){
 		
-		q[i]=25-mapThree.get(Array[i]);
-		
-	//System.out.println(mapThree.get(Array[i]));
-	}
-		a = a.toUpperCase();
-		for(int i1=0; i1 < a.length(); i1++){
-			int b = a.charAt(i1);
-		if(b>90){
-			b=64;			
-		}
-			b=b+q[0];
-		System.out.println((char)b);
-	}
-	
-	*/
 	}
 
 }
