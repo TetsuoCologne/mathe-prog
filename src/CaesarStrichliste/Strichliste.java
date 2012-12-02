@@ -33,7 +33,7 @@ public class Strichliste<K> {
 	  * @param liste eine Hashtable mit vorgebenen Objekth�ufigkeiten
 	  *         Verwendung: f�r die Eingabe der H�ufigkeitstabelle der deutschen Sprache
 	  */
-	 
+	//Deklarierung des Konstrukters so das er für das volle Alphabet das total berechnet also alle wahrscheinlichkeiten zusammen berechnet 
 	public Strichliste(HashMap<K,Integer> liste){
 sl = new HashMap<K,Integer>();
 		
@@ -77,7 +77,7 @@ sl = new HashMap<K,Integer>();
 	 * 
 	 * @param other eine zweite Strichliste
 	 * @return distance die Distanz der beiden Strichlisten (this & other)
-	 */
+	 *///Distanz berechnen Methode 
   	public double distance(Strichliste<K> other) {
   		double result=0.0;
  	   for(K i:sl.keySet())
